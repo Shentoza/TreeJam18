@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager : MonoBehaviour {
+[Prefab("Prefabs/Singletons/Resource Manager", true)]
+public class ResourceManager : Singleton<ResourceManager> {
 
 	public static ResourceManager instance = null;
 
@@ -23,11 +24,6 @@ public class ResourceManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (instance == null) {
-			instance = this;
-		} else {
-			Destroy (this);
-		}
 
 		connected_Trees = new List<GameObject> ();
 	}
@@ -71,14 +67,16 @@ public class ResourceManager : MonoBehaviour {
 		}
 	}
 
-	public void reduce_spore(float amount)
+	public bool reduce_spore(float amount)
 	{
-		if (spore - amount > 0) 
+		if (spore - amount >= 0) 
 		{
 			spore -= amount;
+			return true;
 		} else 
 		{
-			print ("Not enough Spores!");
+			print ("Not enough spores!");
+			return false;
 		}
 	}
 

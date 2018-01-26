@@ -3,21 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour {
-
-    public static UIManager Instance;
+[Prefab("Prefabs/Singletons/UIManager", true)]
+public class UIManager : Singleton<UIManager> {
 
     [SerializeField]
     Text value1;
 
 	// Use this for initialization
 	void Start () {
-        if (Instance != null)
-        {
-            Destroy(this);
-            return;
-        }
-        Instance = this;
         DummyComponent.OnValue1Change += value1Changed;
 
     }
@@ -25,7 +18,6 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Destroy()
     {
-        Instance = null;
         DummyComponent.OnValue1Change -= value1Changed;
     }
 

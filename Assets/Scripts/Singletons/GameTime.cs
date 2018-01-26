@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameTime : MonoBehaviour {
+[Prefab("Prefabs/Singletons/GameTime", true)]
+public class GameTime : Singleton<GameTime> {
 
-
-    public static GameTime Instance;
     [SerializeField]
     float timeScale = 1.0f;
 
@@ -14,14 +13,8 @@ public class GameTime : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
-            return;
-        }
         secondsPassed = 0.0f;
         minutesPassed = 0;
-        Instance = this;
     }
 	
 	// Update is called once per frame
@@ -40,9 +33,4 @@ public class GameTime : MonoBehaviour {
         }
 
 	}
-
-    void Destroy()
-    {
-        Instance = null;
-    }
 }

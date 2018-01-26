@@ -4,11 +4,11 @@ using UnityEngine;
 
 [Prefab("Prefabs/Singletons/EventManager", true)]
 public class EventManager : Singleton<EventManager> {
-    public delegate void SeedChange(int oldValue, int newValue);
-    public static event SeedChange OnSeedChange;
-    public void SendSeedChange(int oldValue, int newValue)
+    public delegate void SporeChange(float oldValue, float newValue);
+    public static event SporeChange OnSporeChange;
+    public void SendSporeChange(float oldValue, float newValue)
     {
-        OnSeedChange(oldValue, newValue);
+        OnSporeChange(oldValue, newValue);
     }
 
     public delegate void SecondPassed();

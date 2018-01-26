@@ -19,10 +19,10 @@ public class DummyComponent : MonoBehaviour {
 	void Update () {
         if(Input.GetKeyDown("w"))
         {
-            setValue1(value1 + 1);
+            setValue1(value1 + 100);
         }
         if (Input.GetKeyDown("s"))
-            setValue1(value1 - 1);
+            setValue1(value1 - 100);
 	}
 
     public void setValue1(int value)

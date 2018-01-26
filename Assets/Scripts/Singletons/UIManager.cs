@@ -3,16 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Prefab("Prefabs/Singletons/UIManager", true)]
+[Prefab("Prefabs/UI", true)]
 public class UIManager : Singleton<UIManager> {
 
     [SerializeField]
-    Text value1;
+    Text sporeScore;
+    int increments = 5;
+    int currentValue, newValue;
 
 	// Use this for initialization
 	void Start () {
         DummyComponent.OnValue1Change += value1Changed;
+        currentValue = newValue = 0;
+    }
 
+    void Update()
+    {
+        if(currentValue != newValue)
+        {
+            if (newValue < currentValue)
+            {
+                currentValue = Mathf.Clamp(currentValue + increments, currentValue, newValue);
+            }
+            else
+            {
+                currentValue = Mathf.Clamp(currentValue - increments, newValue, currentValue);
+            }
+            sporeScore.text = ""+currentValue;
+        }
     }
 	
 	// Update is called once per frame
@@ -23,7 +41,7 @@ public class UIManager : Singleton<UIManager> {
 
     void value1Changed(int value)
     {
-        value1.text = "Seeds: " + value;
+        newValue = value;
     }
 
 

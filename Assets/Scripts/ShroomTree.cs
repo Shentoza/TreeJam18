@@ -50,7 +50,7 @@ public class ShroomTree : MonoBehaviour {
     public bool hasShroom(Mushroom shroom)
     {
         bool result = false;
-        if (shroomsIntersected.Find(shroom))
+        if (true)//shroomsIntersected.Find(shroom))
         {
             result = true;
         }

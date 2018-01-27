@@ -5,8 +5,6 @@ using UnityEngine;
 [Prefab("Prefabs/Singletons/Resource Manager", true)]
 public class ResourceManager : Singleton<ResourceManager> {
 
-	public static ResourceManager instance = null;
-
 	//amount of spore the player has
 	float spore = 0;
 	// the amount of spores which a generated per second

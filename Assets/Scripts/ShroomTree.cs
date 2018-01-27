@@ -17,6 +17,7 @@ public class ShroomTree : MonoBehaviour {
     private bool alive;
 
     //List of all mushrooms in reaching area of tree
+	[SerializeField]
     private List<Mushroom> shroomsIntersected;
  
 
@@ -54,7 +55,8 @@ public class ShroomTree : MonoBehaviour {
     {
         if (c.gameObject.GetComponent<Mushroom>())
         {
-            shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
+			if(!c.isTrigger)
+            	shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
         }
     }
 

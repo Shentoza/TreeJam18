@@ -40,8 +40,11 @@ public class Mushroom : Node
 
     public void die()
     {
-		ShroomTree n = new ShroomTree ();
-		NodeManager.Instance.check_connections (n);
+		foreach (ShroomTree s in treeNeighbors) {
+			s.remove_Node (this);
+			s.removeIntersectedShroom (this);
+		}
+		remove_Node (this);
 		Destroy (this.gameObject);
     }
 
@@ -59,17 +62,5 @@ public class Mushroom : Node
 			}
 		}
     }
-
-    void OnTriggerExit(Collider c)
-    {
-        if (c.gameObject.GetComponent<ShroomTree>())
-        {
-            treeNeighbors.Remove(c.gameObject.GetComponent<ShroomTree>());
-        }
-        else if (c.gameObject.GetComponent<Mushroom>())
-        {
-            mushroomNeighbors.Remove(c.gameObject.GetComponent<Mushroom>());
-			remove_Node(c.gameObject.GetComponent<Mushroom>());
-        }
-    }
+		
 }

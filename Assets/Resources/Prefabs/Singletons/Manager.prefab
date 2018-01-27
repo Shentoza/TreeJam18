@@ -77,3 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6664a8d7a843d413a84eaeb6b24e6dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mushroomPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

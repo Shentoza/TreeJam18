@@ -23,7 +23,7 @@ public class Mushroom : Node
 
 	// Use this for initialization
 	void Start () {
-
+        mushroomNeighbors = new List<Mushroom>();
 	}
 	
 	// Update is called once per frame

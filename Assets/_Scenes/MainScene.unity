@@ -189,8 +189,8 @@ MonoBehaviour:
   speed: 6
   smoothing: 5
   boundary: 50
-  maxZoomIn: 3
-  maxZoomOut: 10
+  maxZoomIn: 6
+  maxZoomOut: 15
 --- !u!81 &2024445923
 AudioListener:
   m_ObjectHideFlags: 0
@@ -228,11 +228,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -1
+  near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: 6
+  field of view: 70
+  orthographic: 0
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

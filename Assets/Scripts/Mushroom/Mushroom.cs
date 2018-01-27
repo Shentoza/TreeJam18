@@ -6,6 +6,12 @@ public class Mushroom : MonoBehaviour
 {
     public float range;
     int sporeCost;
+
+    public int Cost{
+        get{
+            return sporeCost;
+        }
+    }
     static int count;
     public MushroomManager manager;
     List<Mushroom> mushroomNeighbors;
@@ -38,13 +44,6 @@ public class Mushroom : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-    public int Cost
-    {
-        get
-        {
-            return sporeCost;
-=======
     void OnTriggerExit(Collider c)
     {
         if (c.gameObject.GetComponent<ShroomTree>())
@@ -54,7 +53,6 @@ public class Mushroom : MonoBehaviour
         else if (c.gameObject.GetComponent<Mushroom>())
         {
             mushroomNeighbors.Remove(c.gameObject.GetComponent<Mushroom>());
->>>>>>> dca79814ca36d03b38cbc322290eb0873b7e5c87
         }
     }
 }

@@ -258,7 +258,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 0
-  mushMan: {fileID: 0}
   resMan: {fileID: 114312633830986078, guid: 4899f61818908404290d908d76bbdd57, type: 2}
   mushroomNeighbors: []
   treeNeighbors: []

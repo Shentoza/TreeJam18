@@ -26,7 +26,10 @@ public class SpawnWhereIClick : MonoBehaviour {
             if (Input.GetMouseButtonDown(0))                            // what to do if i press the left mouse button
             {
                 Vector3 hitPos = new Vector3(hit.point.x, objectHeight, hit.point.z);     //always spawn on height of the floor + half height of the object
-                mushMan.addMushroom(Instantiate(objectToinstantiate, hitPos, Quaternion.identity).GetComponent<Mushroom>()); // instatiate a prefab on the position where the ray hits the floor.
+                //MushroomManager.Instance.addMushroom(Instantiate(objectToinstantiate, hitPos, 
+                //    Quaternion.identity).GetComponent<Mushroom>()); // instatiate a prefab on the position where the ray hits the floor.
+                Instantiate(objectToinstantiate, hitPos,
+                    Quaternion.identity);
                 Debug.Log(hit.point);                                   // debugs the vector3 of the position where I clicked
             }
         }   

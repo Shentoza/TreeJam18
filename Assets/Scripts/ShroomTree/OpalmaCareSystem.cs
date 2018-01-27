@@ -40,8 +40,9 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
     //Fires "tree is dying" event
     public void addDyingTree(ShroomTree tree)
     {
-            dyingTrees.Add(tree);
-            EventManager.Instance.SendTreeInfectionComplete(tree);
+        dyingTrees.Add(tree);
+		tree.setSporesPerMin (0.0f);
+        EventManager.Instance.SendTreeInfectionComplete(tree);
     }
 
     public void handleDmg()
@@ -61,6 +62,7 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
     {
         foreach(ShroomTree tree in infectedTrees)
         {
+            tree.incrIntegrity();
             if(tree.getIntegrity() >= tree.getMaxIntegrity())
             {
                 addDyingTree(tree);

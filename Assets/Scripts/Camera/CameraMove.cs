@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     private Vector3 movement;
-    public float speed = 6f;
+    public float speed = 10f;
     public float smoothing = 5f;    //not used yet
 
     public int boundary = 50;
@@ -28,16 +28,10 @@ public class CameraMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");       //den Input auf die Axen abfangen (wasd)
         float v = Input.GetAxisRaw("Vertical");
 
-
         if (h != 0 || v != 0)
-        {
             MoveWASD(h, v);
-        }
-
-        if (h == 0 && v == 0)
-        {
+        else
             MovePan();
-        }
         ScrollMouse();
     }
 
@@ -59,24 +53,26 @@ public class CameraMove : MonoBehaviour
 
     private void MovePan()
     {
-        if (Input.mousePosition.x > screenWidth - boundary)        //x axis move
+        Vector3 mousePosition = Input.mousePosition;
+        float x = mousePosition.x, y = mousePosition.y;
+        if (x > screenWidth - boundary && x <= screenWidth)     //x axis move
         {
-            movement.Set(1, 0, 0);
+            movement.Set((x - screenWidth + boundary) / boundary, 0, 0);
             transform.position += movement * speed * Time.deltaTime;
         }
-        if (Input.mousePosition.x < 0 + boundary)        //-x axis move
+        else if (x < boundary && x >= 0)                        //-x axis move
         {
-            movement.Set(-1, 0, 0);
+            movement.Set(-(boundary - x) / boundary, 0, 0);
             transform.position += movement * speed * Time.deltaTime;
         }
-        if (Input.mousePosition.y > screenHeight - boundary)        //y axis move
+        if (y > screenHeight - boundary && y <= screenHeight)   //y axis move
         {
-            movement.Set(0, 0, 1);
+            movement.Set(0, 0, (y - screenHeight + boundary) / boundary);
             transform.position += movement * speed * Time.deltaTime;
         }
-        if (Input.mousePosition.y < 0 + boundary)        //-y axis move
+        else if (y < boundary && y >= 0)                        //-y axis move
         {
-            movement.Set(0, 0, -1);
+            movement.Set(0, 0, -(boundary - y) / boundary);
             transform.position += movement * speed * Time.deltaTime;
         }
     }
@@ -84,11 +80,8 @@ public class CameraMove : MonoBehaviour
     private void MoveWASD(float h, float v)
     { 
         movement.Set(h, 0f, v);
-
-        movement = movement.normalized * speed * Time.deltaTime;    //normalizen da man sonst schneller ist wenn man sich diagonal bewegt
-
+        movement = movement.normalized;
+        movement = movement.normalized * speed * Time.deltaTime * 4f;    //normalizen da man sonst schneller ist wenn man sich diagonal bewegt
         transform.position += movement;
     }
-
-
 }

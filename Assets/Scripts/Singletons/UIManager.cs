@@ -25,7 +25,8 @@ public class UIManager : Singleton<UIManager> {
         EventManager.OnSporeChange += sporeValueChanged;
         EventManager.OnTreeCountChange += treeValueChanged;
         currentSporeValue = newSporeValue = 0;
-        tooltipShowing = true;
+        tooltipPanel.SetActive(false);
+        tooltipShowing = false;
     }
 
     void Update()

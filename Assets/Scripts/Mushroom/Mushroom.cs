@@ -6,7 +6,8 @@ using UnityEngine;
 public class Mushroom : Node
 {
     public float range;
-    int sporeCost = 0,
+    
+    static int sporeCost = 5,
         blockedMask;
 
     public int Cost
@@ -16,7 +17,6 @@ public class Mushroom : Node
             return sporeCost;
         }
     }
-    static int count;
     public List<Mushroom> mushroomNeighbors;
 
     //Baeume in Naehrstoffreichweite

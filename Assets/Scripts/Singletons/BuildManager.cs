@@ -69,7 +69,6 @@ public class BuildManager : Singleton<BuildManager>
         if (ResourceManager.Instance.reduce_spore(cost))
         {
             Instantiate(m, pos, Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0));        //besser hier glaube ich
-                                                                                            //MushroomManager.addMushroom(pos);
             return;
         }
         else

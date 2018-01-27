@@ -10,8 +10,9 @@ GameObject:
   - component: {fileID: 413218}
   - component: {fileID: 3367454}
   - component: {fileID: 2393902}
+  - component: {fileID: 114344074212085366}
   m_Layer: 0
-  m_Name: Poplar_Tree
+  m_Name: Tree2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,3 +87,17 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137650}
   m_IsPrefabParent: 1
+--- !u!114 &114344074212085366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e8c7e5ec3b1fe469bcb1313d4486fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sporesPerMin: 0
+  maxHP: 0
+  maxIntegrity: 0

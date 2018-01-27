@@ -17,6 +17,7 @@ public class ShroomTree : Node {
     private bool alive;
 
     //List of all mushrooms in reaching area of tree
+	[SerializeField]
     private List<Mushroom> shroomsIntersected;
 
     public bool IsAlive
@@ -61,7 +62,8 @@ public class ShroomTree : Node {
     {
         if (c.gameObject.GetComponent<Mushroom>())
         {
-            shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
+			if(!c.isTrigger)
+            	shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
         }
     }
 

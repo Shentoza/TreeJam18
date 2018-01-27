@@ -7,9 +7,9 @@ public class Mushroom : MonoBehaviour
     public float range;
     int sporeCost;
     static int count;
-    MushroomManager manager;
+    public MushroomManager manager;
     List<Mushroom> mushroomNeighbors;
-    List<ShroomTree> treeNeighbors;
+    public List<ShroomTree> treeNeighbors;
 
 	// Use this for initialization
 	void Start () {
@@ -21,21 +21,12 @@ public class Mushroom : MonoBehaviour
 		
 	}
 
-    void detectNeighbors()
-    {
-        foreach(Mushroom m in manager.mushrooms)
-        {
-            if (Vector3.Distance)
-            mushroomNeighbors.Add(m);
-        }
-    }
-
-    void deleteTree(ShroomTree s)
+    public void deleteTree(ShroomTree s)
     {
         treeNeighbors.Remove(s);
     }
 
-    void OnTriggerEnter(Collision c)
+    void OnTriggerEnter(Collider c)
     {
         if (c.gameObject.GetComponent<ShroomTree>())
         {
@@ -44,6 +35,18 @@ public class Mushroom : MonoBehaviour
         else if (c.gameObject.GetComponent<Mushroom>())
         {
             mushroomNeighbors.Add(c.gameObject.GetComponent<Mushroom>());
+        }
+    }
+
+    void OnTriggerExit(Collider c)
+    {
+        if (c.gameObject.GetComponent<ShroomTree>())
+        {
+            treeNeighbors.Remove(c.gameObject.GetComponent<ShroomTree>());
+        }
+        else if (c.gameObject.GetComponent<Mushroom>())
+        {
+            mushroomNeighbors.Remove(c.gameObject.GetComponent<Mushroom>());
         }
     }
 }

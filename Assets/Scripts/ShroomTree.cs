@@ -8,22 +8,32 @@ public class ShroomTree : MonoBehaviour {
     private float sporesPerMin;
 
     [SerializeField]
-    private float healthPoints;
+    private float maxHP;
+
+    private float currentHP;
+
+    [SerializeField]
+    private float maxIntegrity;
 
     //Starts at zero with full spore production 
-    //More integrity = less spore production
-    private float integrity;
+    //if integrity == maxIntegrity, spore production stops
+    private float currentIntegrity;
 
     //Flag to check if tree is alive
     private bool alive;
 
+    private bool infected;
+
     //List of all mushrooms in reaching area of tree
     private List<Mushroom> shroomsIntersected;
- 
 
+    private ResourceManager resMan;
 	void Start () {
         alive = true;
-        shroomsIntersected = new List<Mushroom>();      
+        infected = false;
+        shroomsIntersected = new List<Mushroom>();
+        resMan = GameObject.Find("EventManager").GetComponent<ResourceManager>();
+        
 	}
 
     public void killTree()
@@ -34,7 +44,29 @@ public class ShroomTree : MonoBehaviour {
             shroom.deleteTree(this);
         }
         shroomsIntersected.Clear();
+        resMan.delete_Tree(this);
     }
+
+    //Prototyped dmg calculation. Suggestions?
+    public void harmTree(float dmg)
+    {
+        currentHP -= dmg;
+    }
+
+    public void setIntegrity(float value)
+    {
+        currentIntegrity = value;
+        if(currentIntegrity == maxIntegrity)
+        {
+            setSporesPerMin(0);
+        }
+    }
+
+    public float getIntegrity()
+    {
+        return currentIntegrity;
+    }
+
 	
 
     public bool isAlive()
@@ -50,7 +82,7 @@ public class ShroomTree : MonoBehaviour {
     public bool hasShroom(Mushroom shroom)
     {
         bool result = false;
-        if (shroomsIntersected.Find(shroom))
+        if (shroomsIntersected.Contains(shroom))
         {
             result = true;
         }

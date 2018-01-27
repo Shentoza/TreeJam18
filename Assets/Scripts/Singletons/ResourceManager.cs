@@ -18,14 +18,14 @@ public class ResourceManager : Singleton<ResourceManager> {
 
 
 	//array of trees, which are connected to the main Tree
-	List<GameObject> connected_Trees;
+	List<ShroomTree> connected_Trees;
 	int tree_Amount;
 
 
 	// Use this for initialization
 	void Start () {
 
-		connected_Trees = new List<GameObject> ();
+		connected_Trees = new List<ShroomTree> ();
 	}
 	
 	// Update is called once per frame
@@ -35,13 +35,13 @@ public class ResourceManager : Singleton<ResourceManager> {
 
 	//adds a new tree to the connected Tree array
 	//doesnt do anything if the tree is already connected
-	public void add_Tree(GameObject tree)
+	public void add_Tree(ShroomTree tree)
 	{
 		if (!connected_Trees.Contains (tree)) 
 		{
 			connected_Trees.Add (tree);
 			tree_Amount++;
-			//full_spore_amount += tree.GetComponent<ShroomTree> ().GetSporesPerMin ();
+			//full_spore_amount += tree.GetSporesPerMin ();
 			spores_per_Second = full_spore_amount / 60.0f;
 		} else 
 		{
@@ -58,12 +58,12 @@ public class ResourceManager : Singleton<ResourceManager> {
 	}
 
 	//deletes the given tree if its connected to the network
-	public void delete_Tree(GameObject tree)
+	public void delete_Tree(ShroomTree tree)
 	{
 		if (connected_Trees.Contains (tree)) 
 		{
 			connected_Trees.Remove (tree);
-			//full_spore_amount -= tree.GetComponent<ShroomTree>().GetSporesPerMin();
+			//full_spore_amount -= tree.GetSporesPerMin();
 			spores_per_Second = full_spore_amount / 60.0f;
 		}
 	}

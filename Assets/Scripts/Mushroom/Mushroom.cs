@@ -30,7 +30,7 @@ public class Mushroom : MonoBehaviour
         }
     }
 
-    void deleteTree(ShroomTree s)
+    public void deleteTree(ShroomTree s)
     {
         treeNeighbors.Remove(s);
     }

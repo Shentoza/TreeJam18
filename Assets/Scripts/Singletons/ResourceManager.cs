@@ -39,7 +39,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 		{
 			connected_Trees.Add (tree);
             EventManager.Instance.SendTreeCountChange(tree_Amount++, tree_Amount);
-			//full_spore_amount += tree.GetSporesPerMin ();
+			full_spore_amount += tree.getSporesPerMin ();
 			spores_per_Second = full_spore_amount / 60.0f;
 			NodeManager.Instance.add_Nodes (tree);
 		}
@@ -60,7 +60,6 @@ public class ResourceManager : Singleton<ResourceManager> {
 		{
 			connected_Trees.Remove (tree);
             EventManager.Instance.SendTreeCountChange(tree_Amount--, tree_Amount);
-			//full_spore_amount -= tree.GetSporesPerMin();
 			spores_per_Second = full_spore_amount / 60.0f;
 		}
 	}

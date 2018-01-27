@@ -19,6 +19,13 @@ public class EventManager : Singleton<EventManager> {
         OnTreeCountChange(oldValue, newValue);
     }
 
+    public delegate void TreeInfectionComplete(ShroomTree tree);
+    public static event TreeInfectionComplete OnTreeInfectionComplete;
+    public void SendTreeInfectionComplete(ShroomTree tree)
+    {
+        OnTreeInfectionComplete(tree);
+    }
+
     public delegate void SecondPassed();
     public static event SecondPassed OnSecondPassed;
     public void SendSecondPassed()

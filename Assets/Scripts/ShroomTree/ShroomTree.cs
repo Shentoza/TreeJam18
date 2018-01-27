@@ -7,11 +7,13 @@ public class ShroomTree : Node {
     [SerializeField]
     private float sporesPerMin;
 
+    [SerializeField]
     private float currentHP;
 
     private static float maxHP = 100.0f;
 
     //Starts at zero with full spore production 
+    [SerializeField]
     private float currentIntegrity = .0f;
 
     private static float maxIntegrity = 100.0f;

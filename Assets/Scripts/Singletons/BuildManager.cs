@@ -52,13 +52,11 @@ public class BuildManager : Singleton<BuildManager> {
 	void OnTriggerEnter(Collider c)
 	{
 		++colliderNum;
-		Debug.Log(colliderNum);
 	}
 
 	void OnTriggerExit(Collider c)
 	{
 		--colliderNum;
-		Debug.Log(colliderNum);
 	}
 
 	void Build (int index, Vector3 pos)

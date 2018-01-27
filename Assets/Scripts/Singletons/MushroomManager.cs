@@ -18,7 +18,7 @@ public class MushroomManager : MonoBehaviour {
 
     void addMushroom(Vector3 position)
     {
-        mushrooms.Add(Instantiate(MushroomPrefab, position, 
+        mushrooms.Add(Instantiate(MushroomPrefab, position,     //besser im Build Manager instanciaten finde ich
             Quaternion.identity).GetComponent<Mushroom>());
     }
 

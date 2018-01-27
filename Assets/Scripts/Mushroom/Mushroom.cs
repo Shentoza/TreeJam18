@@ -46,4 +46,12 @@ public class Mushroom : MonoBehaviour
             mushroomNeighbors.Add(c.gameObject.GetComponent<Mushroom>());
         }
     }
+
+    public int Cost
+    {
+        get
+        {
+            return sporeCost;
+        }
+    }
 }

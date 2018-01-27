@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Prefab("Prefabs/UI", true)]
 public class UIManager : Singleton<UIManager> {
 
     [SerializeField]
     Text sporeScore;
-    int increments = 5;
-    int currentValue, newValue;
+    float increments = 1;
+    float currentValue, newValue;
 
 	// Use this for initialization
 	void Start () {
-        DummyComponent.OnValue1Change += value1Changed;
+        EventManager.OnSporeChange += value1Changed;
         currentValue = newValue = 0;
     }
 
     void Update()
     {
-        if(currentValue != newValue)
+        if(Mathf.Abs(currentValue - newValue) >= 1.0f)
         {
-            if (newValue < currentValue)
+            if (newValue > currentValue)
             {
                 currentValue = Mathf.Clamp(currentValue + increments, currentValue, newValue);
             }
@@ -29,6 +28,7 @@ public class UIManager : Singleton<UIManager> {
             {
                 currentValue = Mathf.Clamp(currentValue - increments, newValue, currentValue);
             }
+            Debug.Log(currentValue);
             sporeScore.text = ""+currentValue;
         }
     }
@@ -36,12 +36,12 @@ public class UIManager : Singleton<UIManager> {
 	// Update is called once per frame
 	void Destroy()
     {
-        DummyComponent.OnValue1Change -= value1Changed;
+        EventManager.OnSporeChange -= value1Changed;
     }
 
-    void value1Changed(int value)
-    {
-        newValue = value;
+    void value1Changed(float oldValue, float newValue)
+    { 
+        this.newValue = newValue;
     }
 
 

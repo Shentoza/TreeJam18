@@ -33,8 +33,8 @@ public class TreePlanter : MonoBehaviour {
             //Debug.DrawLine(new Vector3(x, 100, z), hit.point, Color.cyan);
             if (hit.collider.GetComponentInParent<ShroomTree>() != null)
             {
-                Debug.DrawRay(ray.origin, ray.direction, Color.cyan);
-                Debug.Log("Neue Position auswürfeln");
+                //Debug.DrawRay(ray.origin, ray.direction, Color.cyan);
+                //Debug.Log("Neue Position auswürfeln");
                 continue;
             }              
             else

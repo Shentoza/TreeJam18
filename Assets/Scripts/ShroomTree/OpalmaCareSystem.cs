@@ -30,10 +30,6 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
         EventManager.OnSecondPassed -= checkInfections;
     }
 
-    // Update is called once per frame
-	void Update () {
-		
-	}
 
     public void addInfectedTree(ShroomTree tree)
     {

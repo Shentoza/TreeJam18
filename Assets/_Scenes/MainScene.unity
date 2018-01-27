@@ -187,6 +187,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &183344537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 183344530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33134125cf4b2d4d8246d5cbe2e68fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeScale: 1
+  secondsPassed: 0
+  lastSecondsPassed: 0
 --- !u!1 &466866029
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +345,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4449113752731788, guid: 2ad136e594ba2f7469dd318a8be8bb8f, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 135614375035025160, guid: 2ad136e594ba2f7469dd318a8be8bb8f,
         type: 2}
@@ -389,39 +403,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4966319375482660, guid: c0c82714c8a440a44b805b326d4245d2, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c0c82714c8a440a44b805b326d4245d2, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1952586435
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1952586436}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1952586436
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1952586435}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35520366, y: 0.54050386, z: 21.197746}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2024445921
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +512,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1001 &2051231997
 Prefab:
@@ -582,7 +568,7 @@ Prefab:
         type: 2}
       propertyPath: mushroomPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 1943838922167000, guid: 17406d8e74166477b8ad6ff32ee6e717,
+      objectReference: {fileID: 1968483053297206, guid: 2bdc8c477fc54f541a3e7b7dc68c9775,
         type: 2}
     - target: {fileID: 114289511137812274, guid: 4899f61818908404290d908d76bbdd57,
         type: 2}

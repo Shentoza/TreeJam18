@@ -1,34 +1,50 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Prefab("Prefabs/Singletons/Manager", true)]
-public class BuildManager : Singleton<BuildManager> {
+public class BuildManager : Singleton<BuildManager>
+{
 
-	GameObject[] mushroomPrefabs;
+    public GameObject mushroomPrefab;
+    float mushroomCost = 5.0f;
+    float objectHeight;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    int floorMask;
 
-	void Build (int index, Vector3 pos)
+    // Use this for initialization
+    void Start()
     {
-        Mushroom m = mushroomPrefabs[index].GetComponent<Mushroom>();
-		int cost = m.Cost;
-        if (ResourceManager.Instance.reduce_spore(cost)){
-			Instantiate(m, pos, Quaternion.identity);		//besser hier glaube ich
-			//MushroomManager.addMushroom(pos);
-			return;
-		}
-		else{
-			//Fehlersound
-		}
-		
+        floorMask = LayerMask.GetMask("Floor");
+        objectHeight = mushroomPrefab.transform.localScale.y / 2;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);      // von wo der Raycast starten soll
+            RaycastHit hit;
+            if (Physics.Raycast(myRay, out hit, floorMask))                            // wenn der ray was trifft werden die infos des treffers in hit gespeichert
+            {
+                Build(new Vector3(hit.point.x, objectHeight, hit.point.z));
+            }
+        }
+    }
+
+    void Build(Vector3 pos)
+    {
+        if (ResourceManager.Instance.reduce_spore(mushroomCost))
+        {
+            MushroomManager.Instance.addMushroom(Instantiate(mushroomPrefab, pos,
+                Quaternion.identity).GetComponent<Mushroom>());
+            return;
+        }
+        else
+        {
+            //Fehlersound
+        }
+
     }
 }

@@ -16,7 +16,8 @@ public class NodeManager : Singleton<NodeManager>{
 
 	// Use this for initialization
 	void Start () {
-		EventManager.OnTreeInfectionComplete += check_connections;
+		open_Nodes = new List<Node> ();
+		closed_Nodes = new List<Node> ();
 	}
 	
 	// Update is called once per frame
@@ -24,7 +25,7 @@ public class NodeManager : Singleton<NodeManager>{
 		
 	}
 
-	public void check_connections(ShroomTree tree)
+	public void check_connections()
 	{
 		foreach(Node n in all_Nodes)
 		{
@@ -40,6 +41,7 @@ public class NodeManager : Singleton<NodeManager>{
 		while(open_Nodes.Count != 0)
 		{
 			Node current = open_Nodes[0];
+			Debug.Log (current.Neighbours);
 			foreach(Node n in current.Neighbours)
 			{
 				if (!n.IsInOpen && !n.IsInClosed)
@@ -48,6 +50,7 @@ public class NodeManager : Singleton<NodeManager>{
 					n.IsInOpen = true;
 				}
 			}
+			open_Nodes.Remove (current);
 			current.IsInClosed = true;
 			current.IsConnected = true;
 		}
@@ -69,10 +72,5 @@ public class NodeManager : Singleton<NodeManager>{
 	public void add_Nodes(Node new_Node)
 	{
 		all_Nodes.Add (new_Node);
-	}
-
-	void OnDestroy()
-	{
-		EventManager.OnTreeInfectionComplete -= check_connections;
 	}
 }

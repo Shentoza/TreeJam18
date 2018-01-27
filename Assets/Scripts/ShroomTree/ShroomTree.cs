@@ -43,6 +43,7 @@ public class ShroomTree : Node {
         infected = false;
         shroomsIntersected = new List<Mushroom>();
         currentHP = maxHP;
+		initalizeNeighbour ();
 	}
 
     public void killTree()
@@ -53,6 +54,10 @@ public class ShroomTree : Node {
         {
             shroom.deleteTree(this);
         }
+		foreach (Node n in Neighbours) {
+			n.remove_Node (this);
+		}
+		NodeManager.Instance.check_connections ();
         shroomsIntersected.Clear();
     }
 
@@ -62,8 +67,10 @@ public class ShroomTree : Node {
     {
         if (c.gameObject.GetComponent<Mushroom>())
         {
-			if(!c.isTrigger)
-            	shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
+			if (!c.isTrigger) {
+				shroomsIntersected.Add (c.gameObject.GetComponent<Mushroom> ());
+				add_Node (c.gameObject.GetComponent<Mushroom> ());
+			}
         }
     }
 
@@ -89,6 +96,11 @@ public class ShroomTree : Node {
 	public List<Mushroom> getIntersectedShroomList()
 	{
 		return shroomsIntersected;
+	}
+
+	public void removeIntersectedShroom(Mushroom m)
+	{
+		shroomsIntersected.Remove (m);
 	}
 
     public float getSporesPerMin()

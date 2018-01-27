@@ -36,7 +36,6 @@ public class UIManager : Singleton<UIManager> {
         }
     }
 	
-	// Update is called once per frame
 	void Destroy()
     {
         EventManager.OnSporeChange -= sporeValueChanged;

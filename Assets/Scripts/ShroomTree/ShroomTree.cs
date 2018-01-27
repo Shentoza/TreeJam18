@@ -15,7 +15,6 @@ public class ShroomTree : Node {
     //Starts at zero with full spore production 
     private float currentIntegrity = .0f;
 
-    [SerializeField]
     private static float maxIntegrity = 100.0f;
 
     //Flag to check if tree is alive
@@ -45,6 +44,7 @@ public class ShroomTree : Node {
         infected = false;
         shroomsIntersected = new List<Mushroom>();
         currentHP = maxHP;
+		initalizeNeighbour ();
 	}
 
     public void killTree()
@@ -63,8 +63,10 @@ public class ShroomTree : Node {
     {
         if (c.gameObject.GetComponent<Mushroom>())
         {
-			if(!c.isTrigger)
-            	shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
+			if (!c.isTrigger) {
+				shroomsIntersected.Add (c.gameObject.GetComponent<Mushroom> ());
+				add_Node (c.gameObject.GetComponent<Mushroom> ());
+			}
         }
     }
 
@@ -90,6 +92,11 @@ public class ShroomTree : Node {
 	public List<Mushroom> getIntersectedShroomList()
 	{
 		return shroomsIntersected;
+	}
+
+	public void removeIntersectedShroom(Mushroom m)
+	{
+		shroomsIntersected.Remove (m);
 	}
 
     public float getSporesPerMin()

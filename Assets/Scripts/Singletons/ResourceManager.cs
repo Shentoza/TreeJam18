@@ -45,7 +45,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 			spores_per_Second = full_spore_amount / 60.0f;
 		} else 
 		{
-			print ("Tree already connected");
+			Debug.Log("Tree already connected");
 		}
 		
 	}
@@ -53,7 +53,8 @@ public class ResourceManager : Singleton<ResourceManager> {
 	//increases the amount of spore every second
 	public void increase_Spore()
 	{
-		spore += spores_per_Second;
+		float new_spore = spore + spores_per_Second;
+		EventManager.Instance.SendSporeChange (spore, new_spore);
 	}
 
 	//deletes the given tree if its connected to the network
@@ -75,10 +76,8 @@ public class ResourceManager : Singleton<ResourceManager> {
 			return true;
 		} else 
 		{
-			print ("Not enough spores!");
+			Debug.Log("Not enough spores!");
 			return false;
 		}
 	}
-
-
 }

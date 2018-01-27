@@ -12,6 +12,13 @@ public class EventManager : Singleton<EventManager> {
         OnSporeChange(oldValue, newValue);
     }
 
+    public delegate void TreeCountChange(int oldValue, int newValue);
+    public static event TreeCountChange OnTreeCountChange;
+    public void SendTreeCountChange(int oldValue, int newValue)
+    {
+        OnTreeCountChange(oldValue, newValue);
+    }
+
     public delegate void SecondPassed();
     public static event SecondPassed OnSecondPassed;
     public void SendSecondPassed()

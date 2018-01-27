@@ -7,41 +7,50 @@ public class UIManager : Singleton<UIManager> {
 
     [SerializeField]
     Text sporeScore;
-    float increments = 1;
-    float currentValue, newValue;
+    float sporeIncrements = 1;
+    float currentSporeValue, newSporeValue;
+
+    [SerializeField]
+    Text treeScore;
 
 	// Use this for initialization
 	void Start () {
-        EventManager.OnSporeChange += value1Changed;
-        currentValue = newValue = 0;
+        EventManager.OnSporeChange += sporeValueChanged;
+        EventManager.OnTreeCountChange += treeValueChanged;
+        currentSporeValue = newSporeValue = 0;
     }
 
     void Update()
     {
-        if(Mathf.Abs(currentValue - newValue) >= 1.0f)
+        if(Mathf.Abs(currentSporeValue - newSporeValue) >= 1.0f)
         {
-            if (newValue > currentValue)
+            if (newSporeValue > currentSporeValue)
             {
-                currentValue = Mathf.Clamp(currentValue + increments, currentValue, newValue);
+                currentSporeValue = Mathf.Clamp(currentSporeValue + sporeIncrements, currentSporeValue, newSporeValue);
             }
             else
             {
-                currentValue = Mathf.Clamp(currentValue - increments, newValue, currentValue);
+                currentSporeValue = Mathf.Clamp(currentSporeValue - sporeIncrements, newSporeValue, currentSporeValue);
             }
-            Debug.Log(currentValue);
-            sporeScore.text = ""+currentValue;
+            sporeScore.text = ""+currentSporeValue;
         }
     }
 	
 	// Update is called once per frame
 	void Destroy()
     {
-        EventManager.OnSporeChange -= value1Changed;
+        EventManager.OnSporeChange -= sporeValueChanged;
+        EventManager.OnTreeCountChange -= treeValueChanged;
     }
 
-    void value1Changed(float oldValue, float newValue)
+    void sporeValueChanged(float oldValue, float newValue)
     { 
-        this.newValue = newValue;
+        this.newSporeValue = newValue;
+    }
+
+    void treeValueChanged(int oldValue, int newValue)
+    {
+        treeScore.text = ""+newValue;
     }
 
 

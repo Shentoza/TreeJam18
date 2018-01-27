@@ -8,32 +8,22 @@ public class ShroomTree : MonoBehaviour {
     private float sporesPerMin;
 
     [SerializeField]
-    private float maxHP;
-
-    private float currentHP;
-
-    [SerializeField]
-    private float maxIntegrity;
+    private float healthPoints;
 
     //Starts at zero with full spore production 
-    //if integrity == maxIntegrity, spore production stops
-    private float currentIntegrity;
+    private float integrity;
 
     //Flag to check if tree is alive
     private bool alive;
 
-    private bool infected;
-
     //List of all mushrooms in reaching area of tree
+	[SerializeField]
     private List<Mushroom> shroomsIntersected;
+ 
 
-    private ResourceManager resMan;
 	void Start () {
         alive = true;
-        infected = false;
-        shroomsIntersected = new List<Mushroom>();
-        resMan = GameObject.Find("EventManager").GetComponent<ResourceManager>();
-        
+        shroomsIntersected = new List<Mushroom>();      
 	}
 
     public void killTree()
@@ -44,29 +34,7 @@ public class ShroomTree : MonoBehaviour {
             shroom.deleteTree(this);
         }
         shroomsIntersected.Clear();
-        resMan.delete_Tree(this);
     }
-
-    //Prototyped dmg calculation. Suggestions?
-    public void harmTree(float dmg)
-    {
-        currentHP -= dmg;
-    }
-
-    public void setIntegrity(float value)
-    {
-        currentIntegrity = value;
-        if(currentIntegrity == maxIntegrity)
-        {
-            setSporesPerMin(0);
-        }
-    }
-
-    public float getIntegrity()
-    {
-        return currentIntegrity;
-    }
-
 	
 
     public bool isAlive()
@@ -74,15 +42,28 @@ public class ShroomTree : MonoBehaviour {
         return alive;
     }
 
+	/*
     public void addShroom(Mushroom shroom)
     {
         shroomsIntersected.Add(shroom);
+    }
+	*/
+	//instead of addShroom method
+	//Adds a shroom thats within the collider of the tree, even if its not set by the tree itself
+
+	 void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.GetComponent<Mushroom>())
+        {
+			if(!c.isTrigger)
+            	shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
+        }
     }
 
     public bool hasShroom(Mushroom shroom)
     {
         bool result = false;
-        if (shroomsIntersected.Contains(shroom))
+        if (true)//shroomsIntersected.Find(shroom))
         {
             result = true;
         }
@@ -97,6 +78,11 @@ public class ShroomTree : MonoBehaviour {
             Debug.Log(shroom);
         }
     }
+
+	public List<Mushroom> getIntersectedShroomList()
+	{
+		return shroomsIntersected;
+	}
 
     public float getSporesPerMin()
     {

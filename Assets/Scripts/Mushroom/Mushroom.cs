@@ -14,7 +14,6 @@ public class Mushroom : Node
         }
     }
     static int count;
-    public MushroomManager mushMan;
     public ResourceManager resMan;
     public List<Mushroom> mushroomNeighbors;
     

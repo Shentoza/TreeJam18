@@ -7,14 +7,21 @@ public class ShroomTree : Node {
     [SerializeField]
     private float sporesPerMin;
 
+    private float currentHP;
+
     [SerializeField]
-    private float healthPoints;
+    private static float maxHP;
 
     //Starts at zero with full spore production 
-    private float integrity;
+    private float currentIntegrity = .0f;
+
+    [SerializeField]
+    private static float maxIntegrity = 100.0f;
 
     //Flag to check if tree is alive
     private bool alive;
+
+    private bool infected;
 
     //List of all mushrooms in reaching area of tree
 	[SerializeField]
@@ -35,7 +42,9 @@ public class ShroomTree : Node {
 
     void Start () {
         alive = true;
-        shroomsIntersected = new List<Mushroom>();      
+        infected = false;
+        shroomsIntersected = new List<Mushroom>();
+        currentHP = maxHP;
 	}
 
     public void killTree()
@@ -47,17 +56,9 @@ public class ShroomTree : Node {
         }
         shroomsIntersected.Clear();
     }
-	
 
-	/*
-    public void addShroom(Mushroom shroom)
-    {
-        shroomsIntersected.Add(shroom);
-    }
-	*/
-	//instead of addShroom method
-	//Adds a shroom thats within the collider of the tree, even if its not set by the tree itself
 
+    //Trigger for adding shrooms connected to this tree
 	 void OnTriggerEnter(Collider c)
     {
         if (c.gameObject.GetComponent<Mushroom>())
@@ -70,7 +71,7 @@ public class ShroomTree : Node {
     public bool hasShroom(Mushroom shroom)
     {
         bool result = false;
-        if (true)//shroomsIntersected.Find(shroom))
+        if (shroomsIntersected.Contains(shroom))
         {
             result = true;
         }
@@ -99,5 +100,35 @@ public class ShroomTree : Node {
     public void setSporesPerMin(float value)
     {
         sporesPerMin = value;
+    }
+
+    public void dealDamage(float dmg)
+    {
+        currentHP -= dmg;
+    }
+
+    public float getHP()
+    {
+        return currentHP;
+    }
+
+    public void setInfection(bool value)
+    {
+        infected = value;
+    }
+
+    public bool isInfected()
+    {
+        return infected;
+    }
+
+    public float getIntegrity()
+    {
+        return currentIntegrity;
+    }
+
+    public float getMaxIntegrity()
+    {
+        return maxIntegrity;
     }
 }

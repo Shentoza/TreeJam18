@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MushroomManager : MonoBehaviour {
+[Prefab("Prefabs/Singletons/MushroomManager", true)]
+public class MushroomManager : Singleton<MushroomManager> { 
 
     public List<Mushroom> mushrooms;
     public GameObject MushroomPrefab;

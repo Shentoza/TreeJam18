@@ -9,27 +9,41 @@ public class EventManager : Singleton<EventManager> {
     public static event SporeChange OnSporeChange;
     public void SendSporeChange(float oldValue, float newValue)
     {
-        OnSporeChange(oldValue, newValue);
+        if(OnSporeChange != null)
+            OnSporeChange(oldValue, newValue);
     }
 
     public delegate void TreeCountChange(int oldValue, int newValue);
     public static event TreeCountChange OnTreeCountChange;
     public void SendTreeCountChange(int oldValue, int newValue)
     {
-        OnTreeCountChange(oldValue, newValue);
+        if (OnTreeCountChange != null)
+        {
+            OnTreeCountChange(oldValue, newValue);
+        }
+    }
+
+    public delegate void TreeInfectionComplete(ShroomTree tree);
+    public static event TreeInfectionComplete OnTreeInfectionComplete;
+    public void SendTreeInfectionComplete(ShroomTree tree)
+    {
+        if(OnTreeInfectionComplete != null)
+            OnTreeInfectionComplete(tree);
     }
 
     public delegate void SecondPassed();
     public static event SecondPassed OnSecondPassed;
     public void SendSecondPassed()
     {
-        OnSecondPassed();
+        if(OnSecondPassed != null)
+            OnSecondPassed();
     }
 
     public delegate void MinutePassed();
     public static event MinutePassed OnMinutePassed;
     public void SendMinutePassed()
     {
-        OnMinutePassed();
+        if(OnMinutePassed != null)
+            OnMinutePassed();
     }
 }

@@ -23,6 +23,7 @@ public class Mushroom : Node
 	// Use this for initialization
 	void Start () {
         mushroomNeighbors = new List<Mushroom>();
+		initalizeNeighbour ();
 		NodeManager.Instance.add_Nodes (this);
 	}
 	
@@ -39,7 +40,12 @@ public class Mushroom : Node
 
     public void die()
     {
-        //foreach()
+		foreach (ShroomTree s in treeNeighbors) {
+			s.remove_Node (this);
+			s.removeIntersectedShroom (this);
+		}
+		remove_Node (this);
+		Destroy (this.gameObject);
     }
 
     void OnTriggerEnter(Collider c)
@@ -48,22 +54,13 @@ public class Mushroom : Node
 			if (c.gameObject.GetComponent<ShroomTree> ()) {
 				treeNeighbors.Add (c.gameObject.GetComponent<ShroomTree> ());
 				ResourceManager.Instance.add_Tree (c.gameObject.GetComponent<ShroomTree> ());
+				add_Node(c.gameObject.GetComponent<ShroomTree>());
 
 			} else if (c.gameObject.GetComponent<Mushroom> ()) {
 				mushroomNeighbors.Add (c.gameObject.GetComponent<Mushroom> ());
+				add_Node(c.gameObject.GetComponent<Mushroom>());
 			}
 		}
     }
-
-    void OnTriggerExit(Collider c)
-    {
-        if (c.gameObject.GetComponent<ShroomTree>())
-        {
-            treeNeighbors.Remove(c.gameObject.GetComponent<ShroomTree>());
-        }
-        else if (c.gameObject.GetComponent<Mushroom>())
-        {
-            mushroomNeighbors.Remove(c.gameObject.GetComponent<Mushroom>());
-        }
-    }
+		
 }

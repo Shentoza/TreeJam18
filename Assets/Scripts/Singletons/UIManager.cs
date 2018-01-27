@@ -13,11 +13,20 @@ public class UIManager : Singleton<UIManager> {
     [SerializeField]
     Text treeScore;
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    GameObject tooltipPanel;
+    [SerializeField]
+    Text tooltipText;
+
+    public bool tooltipShowing { private set; get; }
+
+    // Use this for initialization
+    void Start () {
         EventManager.OnSporeChange += sporeValueChanged;
         EventManager.OnTreeCountChange += treeValueChanged;
         currentSporeValue = newSporeValue = 0;
+        tooltipPanel.SetActive(false);
+        tooltipShowing = false;
     }
 
     void Update()
@@ -42,6 +51,21 @@ public class UIManager : Singleton<UIManager> {
         EventManager.OnTreeCountChange -= treeValueChanged;
     }
 
+    void OnGUI()
+    {
+        if (tooltipShowing)
+        {
+            Vector2 mousePosLocked = Event.current.mousePosition;
+            Vector2 halfBounds = tooltipPanel.GetComponent<RectTransform>().rect.size;
+            halfBounds += new Vector2(10, 10);
+            halfBounds *= 0.5f;
+            mousePosLocked.x = Mathf.Clamp(mousePosLocked.x + halfBounds.x, halfBounds.x, Camera.main.pixelWidth - halfBounds.x);
+            mousePosLocked.y = Mathf.Clamp(Camera.main.pixelHeight - (mousePosLocked.y + halfBounds.y), halfBounds.y, Camera.main.pixelHeight- halfBounds.y);
+            Vector3 mouse = new Vector3(mousePosLocked.x, mousePosLocked.y, 0);
+            tooltipPanel.transform.position = mouse;    
+        }
+    }
+
     void sporeValueChanged(float oldValue, float newValue)
     { 
         this.newSporeValue = newValue;
@@ -52,5 +76,16 @@ public class UIManager : Singleton<UIManager> {
         treeScore.text = ""+newValue;
     }
 
+    public void showTooltip(string text)
+    {
+        tooltipShowing = true;
+        tooltipPanel.SetActive(true);
+        tooltipText.text = text;
+    }
 
+    public void hideTooltip()
+    {
+        tooltipShowing = false;
+        tooltipPanel.SetActive(false);
+    }
 }

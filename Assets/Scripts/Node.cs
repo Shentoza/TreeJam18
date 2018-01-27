@@ -8,6 +8,8 @@ public class Node : MonoBehaviour {
 
 	private List<Node> neighbours;
 
+	private float buildRange;
+
 	bool isInOpen = false, isInClosed = false;
 
     public bool IsInOpen{
@@ -28,6 +30,11 @@ public class Node : MonoBehaviour {
     public bool IsConnected{
         get{return isConnected;}
 		set{isConnected = value;}
+    }
+
+    public float BuildRange{
+        get{ return buildRange;}
+        set{ buildRange = value;}
     }
 
     // Use this for initialization

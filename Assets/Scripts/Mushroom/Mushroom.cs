@@ -6,7 +6,7 @@ using UnityEngine;
 public class Mushroom : Node
 {
     public float range;
-    int sporeCost;
+    int sporeCost = 0;
 
     public int Cost{
         get{

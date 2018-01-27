@@ -30,6 +30,21 @@ public class Node : MonoBehaviour {
 		set{isConnected = value;}
     }
 
+	public void add_Node(Node n)
+	{
+		neighbours.Add (n);
+	}
+
+	public void remove_Node(Node n)
+	{
+		neighbours.Remove (n);
+	}
+
+	public void initalizeNeighbour()
+	{
+		neighbours = new List<Node> ();
+	}
+
     // Use this for initialization
     void Start () {
 		

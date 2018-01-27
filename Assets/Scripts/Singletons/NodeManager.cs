@@ -16,7 +16,7 @@ public class NodeManager : Singleton<NodeManager>{
 
 	// Use this for initialization
 	void Start () {
-		
+		EventManager.OnTreeInfectionComplete += check_connections;
 	}
 	
 	// Update is called once per frame
@@ -24,7 +24,7 @@ public class NodeManager : Singleton<NodeManager>{
 		
 	}
 
-	public void check_connections()
+	public void check_connections(ShroomTree tree)
 	{
 		foreach(Node n in all_Nodes)
 		{
@@ -69,5 +69,10 @@ public class NodeManager : Singleton<NodeManager>{
 	public void add_Nodes(Node new_Node)
 	{
 		all_Nodes.Add (new_Node);
+	}
+
+	void OnDestroy()
+	{
+		EventManager.OnTreeInfectionComplete -= check_connections;
 	}
 }

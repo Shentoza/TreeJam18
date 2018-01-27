@@ -9,8 +9,7 @@ public class ShroomTree : Node {
 
     private float currentHP;
 
-    [SerializeField]
-    private static float maxHP;
+    private static float maxHP = 100.0f;
 
     //Starts at zero with full spore production 
     private float currentIntegrity = .0f;
@@ -50,10 +49,15 @@ public class ShroomTree : Node {
     public void killTree()
     {
         alive = false;
+        setSporesPerMin(0);
         foreach (Mushroom shroom in shroomsIntersected)
         {
             shroom.deleteTree(this);
         }
+		foreach (Node n in Neighbours) {
+			n.remove_Node (this);
+		}
+		NodeManager.Instance.check_connections ();
         shroomsIntersected.Clear();
     }
 
@@ -133,6 +137,12 @@ public class ShroomTree : Node {
     {
         return currentIntegrity;
     }
+
+    public void incrIntegrity()
+    {
+        currentIntegrity++;
+    }
+
 
     public float getMaxIntegrity()
     {

@@ -8,9 +8,9 @@ public class TreePlanter : MonoBehaviour {
     int numOfTrees;
     GameObject plane;
     [SerializeField]
-    GameObject tree1;
+    ShroomTree tree1;
     [SerializeField]
-    GameObject tree2;
+    ShroomTree tree2;
 
     // Use this for initialization
     void Start() {
@@ -34,8 +34,6 @@ public class TreePlanter : MonoBehaviour {
 
            if (hit.collider.GetComponentInParent<ShroomTree>() != null)
            {
-                //Debug.DrawRay(ray.origin, ray.direction, Color.cyan);
-                Debug.Log("Neue Position auswürfeln");
                 continue;
             }              
             else
@@ -50,15 +48,22 @@ public class TreePlanter : MonoBehaviour {
 
     public void plantTrees()
     {
+        List<ShroomTree> allTrees = new List<ShroomTree>();
         int planted = 0;
         while (planted < numOfTrees)
         {
             Vector3 position;
             position = getTreePosition();
             float treeModel = Random.Range(0, 100);
-            GameObject temp = Instantiate((treeModel <= 50.0f) ? tree1 : tree2, position, tree1.transform.rotation).transform.GetChild(2).gameObject;
-            Destroy(temp);
+            allTrees.Add(Instantiate<ShroomTree>((treeModel <= 50.0f) ? tree1 : tree2, position, tree1.transform.rotation));
             planted++;
-            }
         }
+
+        foreach(ShroomTree tree in allTrees)
+        {
+            Debug.Log("Hallo");
+            Destroy(tree.transform.GetChild(2).gameObject);
+        }
+    }
+   
 }

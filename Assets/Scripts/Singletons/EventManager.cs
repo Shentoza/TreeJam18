@@ -16,7 +16,10 @@ public class EventManager : Singleton<EventManager> {
     public static event TreeCountChange OnTreeCountChange;
     public void SendTreeCountChange(int oldValue, int newValue)
     {
-        OnTreeCountChange(oldValue, newValue);
+        if (OnTreeCountChange != null)
+        {
+            OnTreeCountChange(oldValue, newValue);
+        }
     }
 
     public delegate void TreeInfectionComplete(ShroomTree tree);

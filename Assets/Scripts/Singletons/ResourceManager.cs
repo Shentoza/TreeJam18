@@ -38,7 +38,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 		if (!connected_Trees.Contains (tree)) 
 		{
 			connected_Trees.Add (tree);
-            EventManager.Instance.SendTreeCountChange(tree_Amount++, tree_Amount);
+            EventManager.Instance.SendTreeCountChange(tree_Amount, ++tree_Amount);
 			full_spore_amount += tree.getSporesPerMin ();
 			spores_per_Second = full_spore_amount / 60.0f;
 			NodeManager.Instance.add_Nodes (tree);

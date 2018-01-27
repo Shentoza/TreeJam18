@@ -7,13 +7,13 @@ public class CameraMove : MonoBehaviour
 {
     private Vector3 movement;
     public float speed = 6f;
-    public float smoothing = 5f;
+    public float smoothing = 5f;    //not used yet
 
     public int boundary = 50;
     private int screenWidth;
     private int screenHeight;
 
-    public int maxZoomIn = 3;
+    public int maxZoomIn = 3;   //only for ortographic cam
     public int maxZoomOut = 8;
 
     void Awake()
@@ -28,8 +28,16 @@ public class CameraMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");       //den Input auf die Axen abfangen (wasd)
         float v = Input.GetAxisRaw("Vertical");
 
-        MoveWASD(h, v);
-        MovePan();
+
+        if (h != 0 || v != 0)
+        {
+            MoveWASD(h, v);
+        }
+
+        if (h == 0 && v == 0)
+        {
+            MovePan();
+        }
         ScrollMouse();
     }
 
@@ -37,11 +45,15 @@ public class CameraMove : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0)     //zoom in
         {
-            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize - 1, maxZoomIn);
+            // Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize - 1, maxZoomIn);   //only usable with ortograhpic cam
+            Quaternion target = Quaternion.Euler(transform.rotation.x + 20.0f, 0, 0);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, Time.deltaTime * 10.0f);  //not working properly.....
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)     //zoom out
         {
-            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize + 1, maxZoomOut);
+            //Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize + 1, maxZoomOut);   //only usable with ortograhpic cam
+            Quaternion target = Quaternion.Euler(transform.rotation.x - 20.0f, 0, 0);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, Time.deltaTime * 10.0f); //not working properly.....
         }
     }
 
@@ -70,12 +82,13 @@ public class CameraMove : MonoBehaviour
     }
 
     private void MoveWASD(float h, float v)
-    {
+    { 
         movement.Set(h, 0f, v);
 
         movement = movement.normalized * speed * Time.deltaTime;    //normalizen da man sonst schneller ist wenn man sich diagonal bewegt
 
         transform.position += movement;
     }
+
 
 }

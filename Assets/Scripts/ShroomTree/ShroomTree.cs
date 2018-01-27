@@ -54,6 +54,10 @@ public class ShroomTree : Node {
         {
             shroom.deleteTree(this);
         }
+		foreach (Node n in Neighbours) {
+			n.remove_Node (this);
+		}
+		NodeManager.Instance.check_connections ();
         shroomsIntersected.Clear();
     }
 

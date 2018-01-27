@@ -9,13 +9,11 @@ public class ShroomTree : Node {
 
     private float currentHP;
 
-    [SerializeField]
-    private static float maxHP;
+    private static float maxHP = 100.0f;
 
     //Starts at zero with full spore production 
     private float currentIntegrity = .0f;
 
-    [SerializeField]
     private static float maxIntegrity = 100.0f;
 
     //Flag to check if tree is alive
@@ -50,6 +48,7 @@ public class ShroomTree : Node {
     public void killTree()
     {
         alive = false;
+        setSporesPerMin(0);
         foreach (Mushroom shroom in shroomsIntersected)
         {
             shroom.deleteTree(this);
@@ -126,6 +125,12 @@ public class ShroomTree : Node {
     {
         return currentIntegrity;
     }
+
+    public void incrIntegrity()
+    {
+        currentIntegrity++;
+    }
+
 
     public float getMaxIntegrity()
     {

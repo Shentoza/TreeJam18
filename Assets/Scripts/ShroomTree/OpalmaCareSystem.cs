@@ -65,6 +65,7 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
     {
         foreach(ShroomTree tree in infectedTrees)
         {
+            tree.incrIntegrity();
             if(tree.getIntegrity() >= tree.getMaxIntegrity())
             {
                 addDyingTree(tree);

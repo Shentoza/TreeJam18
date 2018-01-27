@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2377290}
   - component: {fileID: 136313733364135780}
   - component: {fileID: 114266489587820654}
+  - component: {fileID: 135574596147067444}
   m_Layer: 0
   m_Name: Fir_Tree
   m_TagString: Untagged
@@ -101,6 +102,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sporesPerMin: 10
   healthPoints: 100
+--- !u!135 &135574596147067444
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192044}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.85657
+  m_Center: {x: -0.000039458275, y: 2.8566525, z: -0.00022572279}
 --- !u!136 &136313733364135780
 CapsuleCollider:
   m_ObjectHideFlags: 1

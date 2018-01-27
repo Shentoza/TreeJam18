@@ -13,13 +13,16 @@ public class Mushroom : MonoBehaviour
         }
     }
     static int count;
-    public MushroomManager manager;
+    public MushroomManager mushMan;
+    public ResourceManager resMan;
     List<Mushroom> mushroomNeighbors;
     public List<ShroomTree> treeNeighbors;
 
 	// Use this for initialization
 	void Start () {
-        
+        resMan = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        if (!resMan)
+            Debug.Log("[Mushroom] Resource Manager not Found!");
 	}
 	
 	// Update is called once per frame
@@ -37,6 +40,10 @@ public class Mushroom : MonoBehaviour
         if (c.gameObject.GetComponent<ShroomTree>())
         {
             treeNeighbors.Add(c.gameObject.GetComponent<ShroomTree>());
+            if (resMan.hasTree(c.gameObject.GetComponent<ShroomTree>()))
+            {
+                resMan.add_Tree(c.gameObject.GetComponent<ShroomTree>());
+            }
         }
         else if (c.gameObject.GetComponent<Mushroom>())
         {

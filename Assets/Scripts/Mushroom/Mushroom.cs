@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mushroom : MonoBehaviour
+public class Mushroom : Node
 {
     public float range;
     int sporeCost;
@@ -16,6 +17,8 @@ public class Mushroom : MonoBehaviour
     public MushroomManager mushMan;
     public ResourceManager resMan;
     List<Mushroom> mushroomNeighbors;
+    
+    //Baeme in Naehrstoffreichweite
     public List<ShroomTree> treeNeighbors;
 
 	// Use this for initialization
@@ -27,12 +30,18 @@ public class Mushroom : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
     public void deleteTree(ShroomTree s)
     {
         treeNeighbors.Remove(s);
+        if (treeNeighbors.Count == 0)
+            die();
+    }
+
+    public void die()
+    {
+        //foreach()
     }
 
     void OnTriggerEnter(Collider c)

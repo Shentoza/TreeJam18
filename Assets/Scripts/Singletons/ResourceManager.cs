@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Prefab("Prefabs/Singletons/Resource Manager", true)]
+[Prefab("Prefabs/Singletons/Manager", true)]
 public class ResourceManager : Singleton<ResourceManager> {
 
 	//amount of spore the player has

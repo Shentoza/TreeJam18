@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[Prefab("Prefabs/Singletons/Manager", true)]
 public class BuildManager : Singleton<BuildManager> {
 
 	GameObject[] mushroomPrefabs;

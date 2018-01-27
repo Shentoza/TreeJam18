@@ -6,7 +6,7 @@ using UnityEngine;
 public class ResourceManager : Singleton<ResourceManager> {
 
 	//amount of spore the player has
-	private float spore = 0;
+	private float spore = 20.0f;
 	// the amount of spores which a generated per second
 	private float spores_per_Second = 0;
 	// the full amount of spores the player recieves in a minute
@@ -38,7 +38,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 		if (!connected_Trees.Contains (tree)) 
 		{
 			connected_Trees.Add (tree);
-            EventManager.Instance.SendTreeCountChange(tree_Amount++, tree_Amount);
+            EventManager.Instance.SendTreeCountChange(tree_Amount, ++tree_Amount);
 			full_spore_amount += tree.getSporesPerMin ();
 			spores_per_Second = full_spore_amount / 60.0f;
 			NodeManager.Instance.add_Nodes (tree);

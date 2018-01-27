@@ -8,6 +8,8 @@ public class Node : MonoBehaviour {
 
 	private List<Node> neighbours;
 
+	private float buildRange;
+
 	bool isInOpen = false, isInClosed = false;
 
     public bool IsInOpen{
@@ -29,6 +31,26 @@ public class Node : MonoBehaviour {
         get{return isConnected;}
 		set{isConnected = value;}
     }
+
+    public float BuildRange{
+        get{ return buildRange;}
+        set{ buildRange = value;}
+    }
+
+	public void add_Node(Node n)
+	{
+		neighbours.Add (n);
+	}
+
+	public void remove_Node(Node n)
+	{
+		neighbours.Remove (n);
+	}
+
+	public void initalizeNeighbour()
+	{
+		neighbours = new List<Node> ();
+	}
 
     // Use this for initialization
     void Start () {

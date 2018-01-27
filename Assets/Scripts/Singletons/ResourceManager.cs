@@ -6,13 +6,13 @@ using UnityEngine;
 public class ResourceManager : Singleton<ResourceManager> {
 
 	//amount of spore the player has
-	float spore = 0;
+	private float spore = 0;
 	// the amount of spores which a generated per second
-	float spores_per_Second = 0;
+	private float spores_per_Second = 0;
 	// the full amount of spores the player recieves in a minute
-	float full_spore_amount = 0;
+	private float full_spore_amount = 0;
 	// amount of spore one tree produces
-	float spore_per_tree = 0;
+	private float spore_per_tree = 0;
 
 
 	//array of trees, which are connected to the main Tree

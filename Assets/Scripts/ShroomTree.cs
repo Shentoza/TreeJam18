@@ -11,7 +11,6 @@ public class ShroomTree : MonoBehaviour {
     private float healthPoints;
 
     //Starts at zero with full spore production 
-    //More integrity = less spore production
     private float integrity;
 
     //Flag to check if tree is alive
@@ -42,9 +41,21 @@ public class ShroomTree : MonoBehaviour {
         return alive;
     }
 
+	/*
     public void addShroom(Mushroom shroom)
     {
         shroomsIntersected.Add(shroom);
+    }
+	*/
+	//instead of addShroom method
+	//Adds a shroom thats within the collider of the tree, even if its not set by the tree itself
+
+	 void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.GetComponent<Mushroom>())
+        {
+            shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
+        }
     }
 
     public bool hasShroom(Mushroom shroom)
@@ -65,6 +76,11 @@ public class ShroomTree : MonoBehaviour {
             Debug.Log(shroom);
         }
     }
+
+	public List<Mushroom> getIntersectedShroomList()
+	{
+		return shroomsIntersected;
+	}
 
     public float getSporesPerMin()
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Prefab("Prefabs/Singletons/Resource Manager", true)]
+[Prefab("Prefabs/Singletons/Manager", true)]
 public class ResourceManager : Singleton<ResourceManager> {
 
 	//amount of spore the player has
@@ -38,12 +38,10 @@ public class ResourceManager : Singleton<ResourceManager> {
 		if (!connected_Trees.Contains (tree)) 
 		{
 			connected_Trees.Add (tree);
-			tree_Amount++;
+            EventManager.Instance.SendTreeCountChange(tree_Amount++, tree_Amount);
 			full_spore_amount += tree.getSporesPerMin ();
 			spores_per_Second = full_spore_amount / 60.0f;
-		} else 
-		{
-			Debug.Log("Tree already connected");
+			NodeManager.Instance.add_Nodes (tree);
 		}
 		
 	}
@@ -61,7 +59,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 		if (connected_Trees.Contains (tree)) 
 		{
 			connected_Trees.Remove (tree);
-			full_spore_amount -= tree.getSporesPerMin();
+            EventManager.Instance.SendTreeCountChange(tree_Amount--, tree_Amount);
 			spores_per_Second = full_spore_amount / 60.0f;
 		}
 	}
@@ -70,7 +68,9 @@ public class ResourceManager : Singleton<ResourceManager> {
 	{
 		if (spore - amount >= 0) 
 		{
+            float oldSpore = spore;
 			spore -= amount;
+            EventManager.Instance.SendSporeChange(oldSpore, spore);
 			return true;
 		} else 
 		{

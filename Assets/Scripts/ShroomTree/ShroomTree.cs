@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShroomTree : MonoBehaviour {
+public class ShroomTree : Node {
 
     [SerializeField]
     private float sporesPerMin;
@@ -26,9 +26,21 @@ public class ShroomTree : MonoBehaviour {
     //List of all mushrooms in reaching area of tree
 	[SerializeField]
     private List<Mushroom> shroomsIntersected;
- 
 
-	void Start () {
+    public bool IsAlive
+    {
+        get
+        {
+            return alive;
+        }
+
+        set
+        {
+            alive = value;
+        }
+    }
+
+    void Start () {
         alive = true;
         infected = false;
         shroomsIntersected = new List<Mushroom>();
@@ -45,11 +57,6 @@ public class ShroomTree : MonoBehaviour {
         shroomsIntersected.Clear();
     }
 
-
-    public bool isAlive()
-    {
-        return alive;
-    }
 
     //Trigger for adding shrooms connected to this tree
 	 void OnTriggerEnter(Collider c)

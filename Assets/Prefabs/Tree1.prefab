@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 114266489587820654}
   - component: {fileID: 135725419587543592}
   m_Layer: 0
-  m_Name: Fir_Tree
+  m_Name: Tree1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sporesPerMin: 10
   healthPoints: 100
+  shroomsIntersected: []
 --- !u!135 &135725419587543592
 SphereCollider:
   m_ObjectHideFlags: 1

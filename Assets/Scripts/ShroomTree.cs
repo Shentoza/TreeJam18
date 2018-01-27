@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShroomTree : MonoBehaviour {
+public class ShroomTree : Node {
 
     [SerializeField]
     private float sporesPerMin;
@@ -11,17 +11,29 @@ public class ShroomTree : MonoBehaviour {
     private float healthPoints;
 
     //Starts at zero with full spore production 
-    //More integrity = less spore production
     private float integrity;
 
     //Flag to check if tree is alive
     private bool alive;
 
     //List of all mushrooms in reaching area of tree
+	[SerializeField]
     private List<Mushroom> shroomsIntersected;
- 
 
-	void Start () {
+    public bool IsAlive
+    {
+        get
+        {
+            return alive;
+        }
+
+        set
+        {
+            alive = value;
+        }
+    }
+
+    void Start () {
         alive = true;
         shroomsIntersected = new List<Mushroom>();      
 	}
@@ -37,14 +49,22 @@ public class ShroomTree : MonoBehaviour {
     }
 	
 
-    public bool isAlive()
-    {
-        return alive;
-    }
-
+	/*
     public void addShroom(Mushroom shroom)
     {
         shroomsIntersected.Add(shroom);
+    }
+	*/
+	//instead of addShroom method
+	//Adds a shroom thats within the collider of the tree, even if its not set by the tree itself
+
+	 void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.GetComponent<Mushroom>())
+        {
+			if(!c.isTrigger)
+            	shroomsIntersected.Add(c.gameObject.GetComponent<Mushroom>());
+        }
     }
 
     public bool hasShroom(Mushroom shroom)
@@ -65,6 +85,11 @@ public class ShroomTree : MonoBehaviour {
             Debug.Log(shroom);
         }
     }
+
+	public List<Mushroom> getIntersectedShroomList()
+	{
+		return shroomsIntersected;
+	}
 
     public float getSporesPerMin()
     {

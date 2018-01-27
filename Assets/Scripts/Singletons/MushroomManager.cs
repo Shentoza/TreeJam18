@@ -16,13 +16,12 @@ public class MushroomManager : MonoBehaviour {
 		
 	}
 
-    void addMushroom(Vector3 position)
+    public void addMushroom(Mushroom m)
     {
-        mushrooms.Add(Instantiate(MushroomPrefab, position,     //besser im Build Manager instanciaten finde ich
-            Quaternion.identity).GetComponent<Mushroom>());
+        mushrooms.Add(m);
     }
 
-    void destroyMushroom(Mushroom m)
+    public void destroyMushroom(Mushroom m)
     {
         mushrooms.Remove(m);
         Destroy(m.transform);

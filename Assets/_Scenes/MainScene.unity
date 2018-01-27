@@ -345,7 +345,6 @@ GameObject:
   - component: {fileID: 2024445924}
   - component: {fileID: 2024445923}
   - component: {fileID: 2024445922}
-  - component: {fileID: 2024445928}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -439,20 +438,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
---- !u!114 &2024445928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2024445921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76a6f4bc8f76ed4f8e874e460098083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToinstantiate: {fileID: 1943838922167000, guid: 17406d8e74166477b8ad6ff32ee6e717,
-    type: 2}
-  mushMan: {fileID: 114058827019398614, guid: 6a4d7438222b9364fa42b99cd3600598, type: 2}
 --- !u!1001 &2051231997
 Prefab:
   m_ObjectHideFlags: 0
@@ -492,6 +477,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114575446799217300, guid: 4899f61818908404290d908d76bbdd57,
+        type: 2}
+      propertyPath: mushroomPrefab
+      value: 
+      objectReference: {fileID: 1943838922167000, guid: 17406d8e74166477b8ad6ff32ee6e717,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4899f61818908404290d908d76bbdd57, type: 2}
   m_IsPrefabParent: 0

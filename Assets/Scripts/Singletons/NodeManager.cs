@@ -5,6 +5,7 @@ using UnityEngine;
 [Prefab("Prefabs/Singletons/Manager", true)]
 public class NodeManager : Singleton<NodeManager>{
 
+	[SerializeField]
 	List<Node> all_Nodes;
 
 	List<Node> open_Nodes;
@@ -63,5 +64,10 @@ public class NodeManager : Singleton<NodeManager>{
 					ResourceManager.Instance.delete_Tree(n.GetComponent<ShroomTree>());
 				}
 		}
+	}
+
+	public void add_Nodes(Node new_Node)
+	{
+		all_Nodes.Add (new_Node);
 	}
 }

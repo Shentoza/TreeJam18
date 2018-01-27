@@ -41,9 +41,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 			tree_Amount++;
 			//full_spore_amount += tree.GetSporesPerMin ();
 			spores_per_Second = full_spore_amount / 60.0f;
-		} else 
-		{
-			Debug.Log("Tree already connected");
+			NodeManager.Instance.add_Nodes (tree);
 		}
 		
 	}

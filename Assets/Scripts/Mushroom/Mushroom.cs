@@ -16,7 +16,7 @@ public class Mushroom : Node
     static int count;
     public MushroomManager mushMan;
     public ResourceManager resMan;
-    List<Mushroom> mushroomNeighbors;
+    public List<Mushroom> mushroomNeighbors;
     
     //Baeme in Naehrstoffreichweite
     public List<ShroomTree> treeNeighbors;
@@ -24,6 +24,7 @@ public class Mushroom : Node
 	// Use this for initialization
 	void Start () {
         mushroomNeighbors = new List<Mushroom>();
+		NodeManager.Instance.add_Nodes (this);
 	}
 	
 	// Update is called once per frame
@@ -44,19 +45,15 @@ public class Mushroom : Node
 
     void OnTriggerEnter(Collider c)
     {
-        if (c.gameObject.GetComponent<ShroomTree>())
-        {
-			if (!c.isTrigger) {
+		if (!c.isTrigger) {
+			if (c.gameObject.GetComponent<ShroomTree> ()) {
 				treeNeighbors.Add (c.gameObject.GetComponent<ShroomTree> ());
-				if (resMan.hasTree (c.gameObject.GetComponent<ShroomTree> ())) {
-					resMan.add_Tree (c.gameObject.GetComponent<ShroomTree> ());
-				}
+				ResourceManager.Instance.add_Tree (c.gameObject.GetComponent<ShroomTree> ());
+
+			} else if (c.gameObject.GetComponent<Mushroom> ()) {
+				mushroomNeighbors.Add (c.gameObject.GetComponent<Mushroom> ());
 			}
-        }
-        else if (c.gameObject.GetComponent<Mushroom>())
-        {
-            mushroomNeighbors.Add(c.gameObject.GetComponent<Mushroom>());
-        }
+		}
     }
 
     void OnTriggerExit(Collider c)

@@ -10,20 +10,40 @@ public class UIManager : Singleton<UIManager> {
     float sporeIncrements = 1;
     float currentSporeValue, newSporeValue;
 
+    int maxTrees;
+    int currentInfectedTrees;
+    float treeRatio;
     [SerializeField]
-    Text treeScore;
+    RectTransform infectionRatioRect;
 
+    //Tree ToolTip
+    ShroomTree currentTree;
     [SerializeField]
     GameObject tooltipPanel;
-    [SerializeField]
-    Text tooltipText;
 
+    [SerializeField]
+    RectTransform treeHealthbar;
+    float oldHealthValue, newHealthValue;
+    [SerializeField]
+    Vector3 deathPosition;
+    [SerializeField]
+    Vector3 healthyPosition;
+
+
+    float oldInfestation, newInfestation;
+    [SerializeField]
+    Texture2D healthyLeaf;
+    [SerializeField]
+    Texture2D sickLeaf;
+    [SerializeField]
+    List<RawImage> leafes;
     public bool tooltipShowing { private set; get; }
 
     // Use this for initialization
     void Start () {
         EventManager.OnSporeChange += sporeValueChanged;
         EventManager.OnTreeCountChange += treeValueChanged;
+        EventManager.OnMaxTreeCountChange += maxTreesChanged;
         currentSporeValue = newSporeValue = 0;
         tooltipPanel.SetActive(false);
         tooltipShowing = false;
@@ -49,6 +69,7 @@ public class UIManager : Singleton<UIManager> {
     {
         EventManager.OnSporeChange -= sporeValueChanged;
         EventManager.OnTreeCountChange -= treeValueChanged;
+        EventManager.OnMaxTreeCountChange -= maxTreesChanged;
     }
 
     void OnGUI()
@@ -62,7 +83,25 @@ public class UIManager : Singleton<UIManager> {
             mousePosLocked.x = Mathf.Clamp(mousePosLocked.x + halfBounds.x, halfBounds.x, Camera.main.pixelWidth - halfBounds.x);
             mousePosLocked.y = Mathf.Clamp(Camera.main.pixelHeight - (mousePosLocked.y + halfBounds.y), halfBounds.y, Camera.main.pixelHeight- halfBounds.y);
             Vector3 mouse = new Vector3(mousePosLocked.x, mousePosLocked.y, 0);
-            tooltipPanel.transform.position = mouse;    
+            tooltipPanel.transform.position = mouse;
+
+            if (currentTree)
+            {
+                newHealthValue = currentTree.getHP() / 100.0f;
+                if(newHealthValue != oldHealthValue)
+                {
+                    StopCoroutine("lerpHealthbar");
+                    StartCoroutine(lerpHealthbar(oldHealthValue, newHealthValue, 1.0f));
+                    oldHealthValue = newHealthValue;
+                }
+
+                newInfestation = currentTree.getIntegrity() * leafes.Count;
+                if ((int)oldInfestation != (int)newInfestation)
+                    paintLeaves();
+                oldInfestation = newInfestation;
+
+            }
+            
         }
     }
 
@@ -71,21 +110,56 @@ public class UIManager : Singleton<UIManager> {
         this.newSporeValue = newValue;
     }
 
-    void treeValueChanged(int oldValue, int newValue)
+    void treeValueChanged(int change)
     {
-        treeScore.text = ""+newValue;
+        currentInfectedTrees += change;
+        UpdateInfectionUI();
     }
 
-    public void showTooltip(string text)
+    void maxTreesChanged(int value)
     {
-        tooltipShowing = true;
+        maxTrees = value;
+        UpdateInfectionUI();
+    }
+
+    void UpdateInfectionUI()
+    {
+        treeRatio = (float)currentInfectedTrees / (float)maxTrees;
+        infectionRatioRect.localScale = new Vector3(treeRatio, infectionRatioRect.localScale.y, infectionRatioRect.localScale.z);
+    }
+
+    public void showTooltip(ShroomTree tree)
+    {
+        currentTree = tree;
+        oldHealthValue = newHealthValue = currentTree.getHP();
         tooltipPanel.SetActive(true);
-        tooltipText.text = text;
+        tooltipShowing = true;
     }
 
     public void hideTooltip()
     {
         tooltipShowing = false;
         tooltipPanel.SetActive(false);
+    }
+
+    void paintLeaves()
+    {
+        for(int i = 0; i< leafes.Count; ++i)
+        {
+            leafes[i].texture = (int)newInfestation <= i ? healthyLeaf : sickLeaf;
+        }
+    }
+
+    IEnumerator lerpHealthbar(float oldProgress, float progress, float timeNeeded)
+    {
+        float alpha = 0f;
+        while(alpha < 1.0f)
+        {
+            float currentProgress = Mathf.Lerp(oldProgress, progress, alpha);
+            treeHealthbar.localPosition = Vector3.Lerp(deathPosition, healthyPosition, Mathf.SmoothStep(oldProgress, progress, alpha));
+            alpha += Time.deltaTime / timeNeeded;
+            yield return null;
+        }
+        yield break;
     }
 }

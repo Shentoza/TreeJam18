@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Prefab("Prefabs/Singletons/OpalmaCareSystem", true)]
+[Prefab("Prefabs/Singletons/Manager", true)]
 public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
 
     [SerializeField]
@@ -40,13 +40,13 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
         tree.setInfection(true);
         infectedTrees.Add(tree);
         Instantiate(InfectionMarkerPrefab, tree.transform.position + new Vector3(0,15,0), Quaternion.identity);
+        EventManager.Instance.SendTreeCountChange(1);
     }
 
     //Fires "tree is dying" event
     public void addDyingTree(ShroomTree tree)
     {
         dyingTrees.Add(tree);
-		tree.setSporesPerMin (0.0f);
         EventManager.Instance.SendTreeInfectionComplete(tree);
     }
 

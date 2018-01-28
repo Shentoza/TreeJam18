@@ -6,8 +6,7 @@ using UnityEngine;
 public class GameTime : Singleton<GameTime>
 {
 
-    [SerializeField]
-    float timeScale = 1.0f;
+    public float timeScale = 1.0f;
 
     [SerializeField]
     float secondsPassed,
@@ -37,7 +36,7 @@ public class GameTime : Singleton<GameTime>
             secondsPassed -= 60f;
             lastSecondsPassed = 0.0f;
             minutesPassed++;
+            secondsPassed -= 60.0f;
         }
-
     }
 }

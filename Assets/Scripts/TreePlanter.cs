@@ -7,14 +7,14 @@ public class TreePlanter : MonoBehaviour {
     [SerializeField]
     int numOfTrees;
     GameObject plane;
+
     [SerializeField]
-    ShroomTree tree1;
-    [SerializeField]
-    ShroomTree tree2;
+    ShroomTree[] treePrefabs;
 
     // Use this for initialization
     void Awake() {
         plantTrees();
+        EventManager.Instance.SendMaxTreeCountChange(numOfTrees);
     }
 
     public Vector3 getTreePosition()
@@ -54,8 +54,9 @@ public class TreePlanter : MonoBehaviour {
         {
             Vector3 position;
             position = getTreePosition();
-            float treeModel = Random.Range(0, 100);
-            listOfTrees.Add(Instantiate<ShroomTree>((treeModel <= 50.0f) ? tree1 : tree2, position, tree1.transform.rotation));
+            ShroomTree model = treePrefabs[Random.Range(0, treePrefabs.Length)];
+            Quaternion randomRotation = Random.rotation;
+            listOfTrees.Add(Instantiate<ShroomTree>(model, position, Quaternion.Euler(0,Random.Range(0,360f),0)));
             planted++;
         }
 

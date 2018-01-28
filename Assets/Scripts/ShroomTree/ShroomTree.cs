@@ -5,9 +5,6 @@ using UnityEngine;
 public class ShroomTree : Node {
 
     [SerializeField]
-    private float sporesPerMin;
-
-    [SerializeField]
     private float currentHP;
 
     private static float maxHP = 100.0f;
@@ -30,6 +27,21 @@ public class ShroomTree : Node {
 	[SerializeField]
     private List<Mushroom> shroomsIntersected;
 
+    [SerializeField]
+    GameObject Blattwerk;
+
+    public bool IsAlive
+    {
+        get
+        {
+            return alive;
+        }
+
+        set
+        {
+            alive = value;
+        }
+    }
 
 	void Start () {
 		alive = true;
@@ -91,20 +103,15 @@ public class ShroomTree : Node {
 		return shroomsIntersected;
 	}
 
+    public int getIntersectedShroomCount()
+    {
+        return shroomsIntersected.Count;
+    }
+
 	public void removeIntersectedShroom(Mushroom m)
 	{
 		shroomsIntersected.Remove (m);
 	}
-
-    public float getSporesPerMin()
-    {
-        return sporesPerMin;
-    }
-
-    public void setSporesPerMin(float value)
-    {
-        sporesPerMin = value;
-    }
 
     public void dealDamage(float dmg)
     {
@@ -133,7 +140,15 @@ public class ShroomTree : Node {
 
     public void incrIntegrity()
     {
-        currentIntegrity+=5;
+
+        currentIntegrity++;
+        if(currentIntegrity == maxIntegrity)
+        {
+            if(Blattwerk != null)
+            {
+                Destroy(Blattwerk);
+            }
+        }
     }
 
     public float getMaxIntegrity()

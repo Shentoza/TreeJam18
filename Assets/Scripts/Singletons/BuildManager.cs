@@ -9,71 +9,90 @@ public class BuildManager : Singleton<BuildManager>
     [SerializeField]
     GameObject[] mushroomPrefabs;
 
-    private SphereCollider previewCollider;
-
-    private int layer_mask, blocked_mask;
+    private int layer_mask, blocked_mask, buildable_mask;
 
     private bool inBuildMode = true;
 
-    private bool canBuildHere;
-
-    private int colliderNum;
-
     private int selectedShroom = 0;
+
+    private GameObject audioObject;
+
+    private AudioClip buildClip;
+
+    private AudioClip missingClip;
+
+
+   
 
     // Use this for initialization
     void Start()
     {
         layer_mask = LayerMask.GetMask("Floor");
         blocked_mask = LayerMask.GetMask("Blocked");
-        previewCollider = GetComponent<SphereCollider>();
+        buildable_mask = LayerMask.GetMask("Buildable");
+        audioObject = new GameObject();
+        audioObject.AddComponent<AudioSource>();
+        buildClip = Resources.Load<AudioClip>("Sounds/planting") as AudioClip;
+        missingClip = Resources.Load<AudioClip>("Sounds/missing") as AudioClip;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inBuildMode)
+        if (inBuildMode && Input.GetMouseButtonDown(0))
         {
             Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);      // von wo der Raycast starten soll
             RaycastHit hit;
-            if (Physics.Raycast(myRay, out hit, Mathf.Infinity, layer_mask))                            // wenn der ray was trifft werden die infos des treffers in hit gespeichert
+            if (Physics.Raycast(myRay, out hit, Mathf.Infinity, layer_mask) &&
+                !Physics.Raycast(myRay, Mathf.Infinity, blocked_mask) &&
+                Physics.Raycast(myRay, Mathf.Infinity, buildable_mask))                            // wenn der ray was trifft werden die infos des treffers in hit gespeichert
             {
-                previewCollider.transform.position = hit.point;
-                //Debug.Log(hit.point);
-
-                if (colliderNum > 0 && Input.GetMouseButtonDown(0))                            // what to do if i press the left mouse button
-                {
-                    if (!Physics.Raycast(myRay, Mathf.Infinity, blocked_mask))
-                        Build(selectedShroom, hit.point);
-                    //always spawn on height of the floor + half height of the object
-                    //Debug.Log(hit.point);                                   // debugs the vector3 of the position where I clicked
-                }
+                Build(selectedShroom, hit.point);
+            }
+            else
+            {
+                Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                audioObject.transform.position = clickPos;
+                audioObject.GetComponent<AudioSource>().PlayOneShot(missingClip);
             }
         }
     }
 
-    void OnTriggerEnter(Collider c)
-    {
-        ++colliderNum;
-    }
-
-    void OnTriggerExit(Collider c)
-    {
-        --colliderNum;
-    }
-
     void Build(int index, Vector3 pos)
     {
+        float rng = Random.value;
+        if (rng < 0.3f)
+        {
+            index = 0;
+        }
+        else if (rng < 0.6f)
+        {
+            index = 1;
+        }
+        else
+        {
+            index = 2;
+        }
         GameObject m = mushroomPrefabs[index];
         int cost = m.GetComponent<Mushroom>().Cost;
         if (ResourceManager.Instance.reduce_spore(cost))
         {
-            Instantiate(m, pos, Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0));        //besser hier glaube ich
+            GameObject temp = Instantiate(m, pos, Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0));
+
+            audioObject.transform.position = temp.transform.position;
+            audioObject.GetComponent<AudioSource>().PlayOneShot(buildClip);
+
+
             return;
         }
         else
         {
-            //Fehlersound
+           Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+           audioObject.transform.position = clickPos;
+           audioObject.GetComponent<AudioSource>().PlayOneShot(missingClip);
+           
         }
 
     }

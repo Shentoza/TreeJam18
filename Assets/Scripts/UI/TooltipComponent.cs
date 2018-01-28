@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class TooltipComponent : MonoBehaviour {
 
-    [SerializeField]
-    string text = "This is "+"\n" +"debug stuff!";
+    private ShroomTree tree;
+
+    void Start()
+    {
+        tree = GetComponent<ShroomTree>();
+    }
 
     void OnMouseEnter()
     {
-        UIManager.Instance.showTooltip(text);
+        if(tree)
+        {
+            Debug.Log("Enter");
+            UIManager.Instance.showTooltip(tree);
+        }
     }
 
     void OnMouseExit()
     {
-        UIManager.Instance.hideTooltip();
+        Debug.Log("HIDE"); 
+        if(tree)
+            UIManager.Instance.hideTooltip();
     }
 }

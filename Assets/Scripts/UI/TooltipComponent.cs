@@ -8,7 +8,7 @@ public class TooltipComponent : MonoBehaviour {
 
     void Start()
     {
-        tree = GetComponent<ShroomTree>();
+        //tree = GetComponent<ShroomTree>();
     }
 
     void OnMouseEnter()

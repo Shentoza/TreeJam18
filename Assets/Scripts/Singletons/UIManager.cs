@@ -13,7 +13,7 @@ public class UIManager : Singleton<UIManager> {
 
     int maxTrees;
     int currentInfectedTrees;
-    float treeRatio;
+    float treeRatio = 0.0f;
     [SerializeField]
     RectTransform infectionRatioRect;
 
@@ -126,6 +126,7 @@ public class UIManager : Singleton<UIManager> {
     void UpdateInfectionUI()
     {
         treeRatio = (float)currentInfectedTrees / (float)maxTrees;
+
         infectionRatioRect.localScale = new Vector3(treeRatio, infectionRatioRect.localScale.y, infectionRatioRect.localScale.z);
     }
 

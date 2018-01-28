@@ -42,6 +42,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 		{
 			connected_Trees.Add (tree);
             tree.transform.GetChild(0).gameObject.SetActive(true);
+            tree.transform.GetChild(1).gameObject.SetActive(true);
             EventManager.Instance.SendTreeCountChange(++tree_Amount);
             calculateSporeGain();
 			NodeManager.Instance.add_Nodes (tree);

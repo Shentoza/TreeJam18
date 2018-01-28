@@ -132,6 +132,8 @@ public class UIManager : Singleton<UIManager> {
     {
         currentTree = tree;
         oldHealthValue = newHealthValue = currentTree.getHP();
+        tooltipPanel.SetActive(true);
+        tooltipShowing = true;
     }
 
     public void hideTooltip()

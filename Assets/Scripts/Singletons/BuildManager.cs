@@ -48,7 +48,12 @@ public class BuildManager : Singleton<BuildManager>
         int cost = m.GetComponent<Mushroom>().Cost;
         if (ResourceManager.Instance.reduce_spore(cost))
         {
-            Instantiate(m, pos, Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0));        //besser hier glaube ich
+            GameObject temp = Instantiate(m, pos, Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0));
+            AudioClip clip = Resources.Load<AudioClip>("planting");
+            
+            temp.AddComponent<AudioSource>().PlayOneShot(clip);
+            
+
             return;
         }
         else

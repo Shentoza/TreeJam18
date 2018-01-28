@@ -50,7 +50,7 @@ public class ShroomTree : Node {
 		}
 		NodeManager.Instance.check_connections ();
         shroomsIntersected.Clear();
-		Destroy (gameObject);
+		gameObject.GetComponent<SphereCollider> ().radius = 0f;
     }
 
 

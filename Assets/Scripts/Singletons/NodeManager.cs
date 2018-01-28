@@ -41,7 +41,6 @@ public class NodeManager : Singleton<NodeManager>{
 		while(open_Nodes.Count != 0)
 		{
 			Node current = open_Nodes[0];
-			Debug.Log (current.Neighbours);
 			foreach(Node n in current.Neighbours)
 			{
 				if (!n.IsInOpen && !n.IsInClosed)

@@ -5,21 +5,25 @@ using UnityEngine;
 [Prefab("Prefabs/Singletons/Manager", true)]
 public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
 
+    [SerializeField]
+    GameObject InfectionMarkerPrefab;
 
     //List with all infected trees
-    List<ShroomTree> infectedTrees;
+	[SerializeField]
+	List<ShroomTree> infectedTrees = new List<ShroomTree>();
 
     //List with all infected trees which get dmg over time
-    List<ShroomTree> dyingTrees;
+	[SerializeField]
+	List<ShroomTree> dyingTrees= new List<ShroomTree>();
 
     //Pick value
     [SerializeField]
     private float dmg;
 
 	// Use this for initialization
+
+
 	void Start () {
-        infectedTrees = new List<ShroomTree>();
-        dyingTrees = new List<ShroomTree>();
         EventManager.OnSecondPassed += handleDmg;
         EventManager.OnSecondPassed += checkInfections;
 	}
@@ -35,6 +39,7 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
     {
         tree.setInfection(true);
         infectedTrees.Add(tree);
+        Instantiate(InfectionMarkerPrefab, tree.transform.position + new Vector3(0,15,0), Quaternion.identity);
         EventManager.Instance.SendTreeCountChange(1);
     }
 
@@ -47,14 +52,17 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
 
     public void handleDmg()
     {
-        foreach (ShroomTree tree in dyingTrees)
-        {   if (tree.getHP()-dmg > .0f)
-                tree.dealDamage(dmg);
-            else
-            {
-                tree.killTree();
-            }
-        }
+	 	foreach (ShroomTree tree in dyingTrees)
+	    {   
+			if (tree.alive) {
+				if (tree.getHP () - dmg > .0f) {
+					tree.dealDamage (dmg);
+				} else {
+					tree.alive = false;
+					tree.killTree ();
+				}
+			}
+	   	}
     }
 
 
@@ -65,9 +73,11 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
         foreach(ShroomTree tree in infectedTrees)
         {
             tree.incrIntegrity();
-            if(tree.getIntegrity() >= tree.getMaxIntegrity())
+			if(tree.getIntegrity() >= tree.getMaxIntegrity() && !tree.dies)
             {
-                addDyingTree(tree);
+				tree.dies = true;
+				addDyingTree(tree);
+				tree.gameObject.AddComponent<Infection> ();
             }
         }
     }

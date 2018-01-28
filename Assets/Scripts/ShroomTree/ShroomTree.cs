@@ -16,9 +16,12 @@ public class ShroomTree : Node {
     private static float maxIntegrity = 100.0f;
 
     //Flag to check if tree is alive
-    private bool alive;
+    public bool alive;
 
-    private bool infected;
+	[SerializeField]
+	private bool infected = false;
+
+	public bool dies = false;
 
     //List of all mushrooms in reaching area of tree
 	[SerializeField]
@@ -40,11 +43,10 @@ public class ShroomTree : Node {
         }
     }
 
-    void Start () {
-        alive = true;
-        infected = false;
-        shroomsIntersected = new List<Mushroom>();
-        currentHP = maxHP;
+	void Start () {
+		alive = true;
+		shroomsIntersected = new List<Mushroom>();
+		currentHP = maxHP;
 		initalizeNeighbour ();
 	}
 
@@ -60,6 +62,7 @@ public class ShroomTree : Node {
 		}
 		NodeManager.Instance.check_connections ();
         shroomsIntersected.Clear();
+		gameObject.GetComponent<SphereCollider> ().radius = 0f;
     }
 
 
@@ -137,6 +140,7 @@ public class ShroomTree : Node {
 
     public void incrIntegrity()
     {
+
         currentIntegrity++;
         if(currentIntegrity == maxIntegrity)
         {
@@ -146,7 +150,6 @@ public class ShroomTree : Node {
             }
         }
     }
-
 
     public float getMaxIntegrity()
     {

@@ -8,9 +8,9 @@ public class TreePlanter : MonoBehaviour {
     int numOfTrees;
     GameObject plane;
     [SerializeField]
-    GameObject tree1;
+    ShroomTree tree1;
     [SerializeField]
-    GameObject tree2;
+    ShroomTree tree2;
 
     // Use this for initialization
     void Start() {
@@ -23,19 +23,16 @@ public class TreePlanter : MonoBehaviour {
         bool freeSpace = false;
         while (!freeSpace)
         {
+            //Find x,y on plane
             float x = Random.Range(transform.localScale.x * (-5.0f), transform.localScale.x * 5.0f);
             float z = Random.Range(transform.localScale.z * (-5.0f), transform.localScale.z * 5.0f);
 
             Ray ray = new Ray(new Vector3(x, 100, z), new Vector3(0, -1, 0));
-            //Debug.DrawRay(new Vector3(x, 100, z), new Vector3(0, -1, 0));
             RaycastHit hit;
-
             Physics.Raycast(ray, out hit);
 
-           if (hit.collider.GetComponentInParent<ShroomTree>() != null)
-           {
-                //Debug.DrawRay(ray.origin, ray.direction, Color.cyan);
-                Debug.Log("Neue Position auswürfeln");
+            if (hit.collider.GetComponentInParent<ShroomTree>() != null)
+            {
                 continue;
             }              
             else
@@ -50,15 +47,22 @@ public class TreePlanter : MonoBehaviour {
 
     public void plantTrees()
     {
+        List<ShroomTree> listOfTrees = new List<ShroomTree>();
         int planted = 0;
+
         while (planted < numOfTrees)
         {
             Vector3 position;
             position = getTreePosition();
             float treeModel = Random.Range(0, 100);
-            GameObject temp = Instantiate((treeModel <= 50.0f) ? tree1 : tree2, position, tree1.transform.rotation).transform.GetChild(2).gameObject;
-            Destroy(temp);
+            listOfTrees.Add(Instantiate<ShroomTree>((treeModel <= 50.0f) ? tree1 : tree2, position, tree1.transform.rotation));
             planted++;
-            }
         }
+
+        foreach(ShroomTree tree in listOfTrees)
+        {
+            Destroy(tree.transform.GetChild(2).gameObject);
+        }
+    }
+   
 }

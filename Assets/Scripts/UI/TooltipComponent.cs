@@ -15,12 +15,14 @@ public class TooltipComponent : MonoBehaviour {
     {
         if(tree)
         {
+            Debug.Log("Enter");
             UIManager.Instance.showTooltip(tree);
         }
     }
 
     void OnMouseExit()
     {
+        Debug.Log("HIDE"); 
         if(tree)
             UIManager.Instance.hideTooltip();
     }

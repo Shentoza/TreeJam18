@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Prefab("Prefabs/UI", true)]
 public class UIManager : Singleton<UIManager> {
 
     [SerializeField]

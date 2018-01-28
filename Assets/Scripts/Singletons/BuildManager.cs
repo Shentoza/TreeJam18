@@ -44,6 +44,19 @@ public class BuildManager : Singleton<BuildManager>
 
     void Build(int index, Vector3 pos)
     {
+        float rng = Random.value;
+        if (rng < 0.3f)
+        {
+            index = 0;
+        }
+        else if (rng < 0.6f)
+        {
+            index = 1;
+        }
+        else
+        {
+            index = 2;
+        }
         GameObject m = mushroomPrefabs[index];
         int cost = m.GetComponent<Mushroom>().Cost;
         if (ResourceManager.Instance.reduce_spore(cost))

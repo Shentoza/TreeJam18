@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Prefab("Prefabs/Singletons/EventManager", true)]
+[Prefab("Prefabs/Singletons/Manager", true)]
 public class EventManager : Singleton<EventManager> {
     public delegate void SporeChange(float oldValue, float newValue);
     public static event SporeChange OnSporeChange;
@@ -20,6 +20,16 @@ public class EventManager : Singleton<EventManager> {
         if (OnTreeCountChange != null)
         {
             OnTreeCountChange(oldValue, newValue);
+        }
+    }
+
+    public delegate void MaxTreeCountChange(int value);
+    public static event MaxTreeCountChange OnMaxTreeCountChange;
+    public void SendMaxTreeCountChange(int value)
+    {
+        if (OnMaxTreeCountChange != null)
+        {
+            OnMaxTreeCountChange(value);
         }
     }
 

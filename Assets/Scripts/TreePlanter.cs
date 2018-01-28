@@ -14,6 +14,7 @@ public class TreePlanter : MonoBehaviour {
     // Use this for initialization
     void Start() {
         plantTrees();
+        EventManager.Instance.SendMaxTreeCountChange(numOfTrees);
     }
 
     public Vector3 getTreePosition()

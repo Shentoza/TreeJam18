@@ -10,10 +10,11 @@ public class UIManager : Singleton<UIManager> {
     float sporeIncrements = 1;
     float currentSporeValue, newSporeValue;
 
+    int maxTrees;
+    int currentInfectedTrees;
+    float treeRatio;
     [SerializeField]
-    Text treeScore;
-
-
+    RectTransform infectionRatioRect;
 
     //Tree ToolTip
     ShroomTree currentTree;
@@ -42,6 +43,7 @@ public class UIManager : Singleton<UIManager> {
     void Start () {
         EventManager.OnSporeChange += sporeValueChanged;
         EventManager.OnTreeCountChange += treeValueChanged;
+        EventManager.OnMaxTreeCountChange += maxTreesChanged;
         currentSporeValue = newSporeValue = 0;
         tooltipPanel.SetActive(false);
         tooltipShowing = false;
@@ -67,6 +69,7 @@ public class UIManager : Singleton<UIManager> {
     {
         EventManager.OnSporeChange -= sporeValueChanged;
         EventManager.OnTreeCountChange -= treeValueChanged;
+        EventManager.OnMaxTreeCountChange -= maxTreesChanged;
     }
 
     void OnGUI()
@@ -109,7 +112,20 @@ public class UIManager : Singleton<UIManager> {
 
     void treeValueChanged(int oldValue, int newValue)
     {
-        treeScore.text = ""+newValue;
+        currentInfectedTrees = newValue;
+        UpdateInfectionUI();
+    }
+
+    void maxTreesChanged(int value)
+    {
+        maxTrees = value;
+        UpdateInfectionUI();
+    }
+
+    void UpdateInfectionUI()
+    {
+        treeRatio = (float)currentInfectedTrees / (float)maxTrees;
+        infectionRatioRect.localScale = new Vector3(treeRatio, infectionRatioRect.localScale.y, infectionRatioRect.localScale.z);
     }
 
     public void showTooltip(ShroomTree tree)

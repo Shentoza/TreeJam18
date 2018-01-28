@@ -26,10 +26,6 @@ public class Mushroom : Node
 		initalizeNeighbour ();
 		NodeManager.Instance.add_Nodes (this);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
 
     public void deleteTree(ShroomTree s)
     {

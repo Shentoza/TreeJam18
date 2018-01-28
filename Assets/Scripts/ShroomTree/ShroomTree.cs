@@ -98,6 +98,11 @@ public class ShroomTree : Node {
 		return shroomsIntersected;
 	}
 
+    public int getIntersectedShroomCount()
+    {
+        return shroomsIntersected.Count;
+    }
+
 	public void removeIntersectedShroom(Mushroom m)
 	{
 		shroomsIntersected.Remove (m);

@@ -13,11 +13,27 @@ public class UIManager : Singleton<UIManager> {
     [SerializeField]
     Text treeScore;
 
+
+
+    //Tree ToolTip
+    ShroomTree currentTree;
     [SerializeField]
     GameObject tooltipPanel;
-    [SerializeField]
-    Text tooltipText;
 
+    [SerializeField]
+    RectTransform treeHealthbar;
+    float oldHealthValue, newHealthValue;
+    [SerializeField]
+    float offsetOutTheWindow = 94;
+
+
+    float oldInfestation, newInfestation;
+    [SerializeField]
+    Texture2D healthyLeaf;
+    [SerializeField]
+    Texture2D sickLeaf;
+    [SerializeField]
+    List<RawImage> leafes;
     public bool tooltipShowing { private set; get; }
 
     // Use this for initialization
@@ -25,8 +41,8 @@ public class UIManager : Singleton<UIManager> {
         EventManager.OnSporeChange += sporeValueChanged;
         EventManager.OnTreeCountChange += treeValueChanged;
         currentSporeValue = newSporeValue = 0;
-        tooltipPanel.SetActive(false);
-        tooltipShowing = false;
+        tooltipPanel.SetActive(true);
+        tooltipShowing = true;
     }
 
     void Update()
@@ -62,7 +78,19 @@ public class UIManager : Singleton<UIManager> {
             mousePosLocked.x = Mathf.Clamp(mousePosLocked.x + halfBounds.x, halfBounds.x, Camera.main.pixelWidth - halfBounds.x);
             mousePosLocked.y = Mathf.Clamp(Camera.main.pixelHeight - (mousePosLocked.y + halfBounds.y), halfBounds.y, Camera.main.pixelHeight- halfBounds.y);
             Vector3 mouse = new Vector3(mousePosLocked.x, mousePosLocked.y, 0);
-            tooltipPanel.transform.position = mouse;    
+            tooltipPanel.transform.position = mouse;
+            newInfestation = currentTree.getIntegrity() * leafes.Count;
+            if ((int)oldInfestation != (int)newInfestation)
+                paintLeaves();
+            oldInfestation = newInfestation;
+
+            newHealthValue = currentTree.getHP();
+            /*
+            if(newHealthValue != oldHealthValue)
+            {
+
+            }
+            */
         }
     }
 
@@ -76,11 +104,10 @@ public class UIManager : Singleton<UIManager> {
         treeScore.text = ""+newValue;
     }
 
-    public void showTooltip(string text)
+    public void showTooltip(ShroomTree tree)
     {
-        tooltipShowing = true;
-        tooltipPanel.SetActive(true);
-        tooltipText.text = text;
+        currentTree = tree;
+        oldHealthValue = newHealthValue = currentTree.getHP();
     }
 
     public void hideTooltip()
@@ -88,4 +115,19 @@ public class UIManager : Singleton<UIManager> {
         tooltipShowing = false;
         tooltipPanel.SetActive(false);
     }
+
+    void paintLeaves()
+    {
+        for(int i = 0; i< leafes.Count; ++i)
+        {
+            leafes[i].texture = (int)newInfestation <= i ? healthyLeaf : sickLeaf;
+        }
+    }
+    /*
+    IEnumerator lerpHealthbar(float from, float to, float timeNeeded)
+    {
+
+        yield break;
+    }
+    */
 }

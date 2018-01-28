@@ -5,8 +5,7 @@ using UnityEngine;
 [Prefab("Prefabs/Singletons/GameTime", true)]
 public class GameTime : Singleton<GameTime> {
 
-    [SerializeField]
-    float timeScale = 1.0f;
+    public float timeScale = 1.0f;
 
     float secondsPassed;
     int minutesPassed;
@@ -30,7 +29,7 @@ public class GameTime : Singleton<GameTime> {
         {
             EventManager.Instance.SendMinutePassed();
             minutesPassed++;
+            secondsPassed -= 60.0f;
         }
-
 	}
 }

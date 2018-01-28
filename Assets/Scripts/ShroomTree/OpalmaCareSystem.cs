@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Prefab("Prefabs/Singletons/OpalmaCareSystem", true)]
+[Prefab("Prefabs/Singletons/Manager", true)]
 public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
 
 

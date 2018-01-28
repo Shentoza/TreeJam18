@@ -15,6 +15,12 @@ public class BuildManager : Singleton<BuildManager>
 
     private int selectedShroom = 0;
 
+    private GameObject audioObject;
+
+    private AudioClip buildClip;
+
+    private AudioClip missingClip;
+
 
    
 
@@ -24,6 +30,12 @@ public class BuildManager : Singleton<BuildManager>
         layer_mask = LayerMask.GetMask("Floor");
         blocked_mask = LayerMask.GetMask("Blocked");
         buildable_mask = LayerMask.GetMask("Buildable");
+        audioObject = new GameObject();
+        audioObject.AddComponent<AudioSource>();
+        buildClip = Resources.Load<AudioClip>("Sounds/planting") as AudioClip;
+        missingClip = Resources.Load<AudioClip>("Sounds/missing") as AudioClip;
+
+
     }
 
     // Update is called once per frame
@@ -39,6 +51,12 @@ public class BuildManager : Singleton<BuildManager>
             {
                 Build(selectedShroom, hit.point);
             }
+            else
+            {
+                Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                audioObject.transform.position = clickPos;
+                audioObject.GetComponent<AudioSource>().PlayOneShot(missingClip);
+            }
         }
     }
 
@@ -49,16 +67,19 @@ public class BuildManager : Singleton<BuildManager>
         if (ResourceManager.Instance.reduce_spore(cost))
         {
             GameObject temp = Instantiate(m, pos, Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0));
-            AudioClip clip = Resources.Load<AudioClip>("planting");
-            
-            temp.AddComponent<AudioSource>().PlayOneShot(clip);
-            
+
+            audioObject.transform.position = temp.transform.position;
+            audioObject.GetComponent<AudioSource>().PlayOneShot(buildClip);
+
 
             return;
         }
         else
         {
-            //Fehlersound
+           Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+           audioObject.transform.position = clickPos;
+           audioObject.GetComponent<AudioSource>().PlayOneShot(missingClip);
+           
         }
 
     }

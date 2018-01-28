@@ -42,7 +42,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 		{
 			connected_Trees.Add (tree);
             tree.transform.GetChild(0).gameObject.SetActive(true);
-            EventManager.Instance.SendTreeCountChange(tree_Amount, ++tree_Amount);
+            EventManager.Instance.SendTreeCountChange(++tree_Amount);
             calculateSporeGain();
 			NodeManager.Instance.add_Nodes (tree);
 		}
@@ -64,7 +64,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 		{
 			connected_Trees.Remove (tree);
             tree.transform.GetChild(0).gameObject.SetActive(false);
-            EventManager.Instance.SendTreeCountChange(tree_Amount, --tree_Amount);
+            EventManager.Instance.SendTreeCountChange(--tree_Amount);
             calculateSporeGain();
             NodeManager.Instance.remove_Node(tree);
 		}

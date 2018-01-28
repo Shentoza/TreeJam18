@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 114289511137812274}
   - component: {fileID: 114575446799217300}
   - component: {fileID: 114312633830986078}
+  - component: {fileID: 114286322879985320}
+  - component: {fileID: 114537340664463608}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -42,6 +44,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114286322879985320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1177006234876362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7e32ff12e80df4db6c642475462d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114289511137812274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,6 +79,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce534620747b4f4786a308f7d207a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spore: 50
+--- !u!114 &114537340664463608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1177006234876362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a089e21d7bf44645a6028edda1919f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 4
 --- !u!114 &114575446799217300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,6 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mushroomPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1968483053297206, guid: 2bdc8c477fc54f541a3e7b7dc68c9775, type: 2}
+  - {fileID: 1521317596170744, guid: 81861fd77e62cce43a8ed2559d9e5490, type: 2}
+  - {fileID: 1884271366663498, guid: 25380a45381e3ca45ac1e87f8cd4bfd9, type: 2}

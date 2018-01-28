@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Prefab("Prefabs/Singletons/OpalmaCareSystem", true)]
+[Prefab("Prefabs/Singletons/Manager", true)]
 public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
 
 
@@ -35,6 +35,7 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
     {
         tree.setInfection(true);
         infectedTrees.Add(tree);
+        EventManager.Instance.SendTreeCountChange(1);
     }
 
     //Fires "tree is dying" event
@@ -50,7 +51,9 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
         {   if (tree.getHP()-dmg > .0f)
                 tree.dealDamage(dmg);
             else
+            {
                 tree.killTree();
+            }
         }
     }
 

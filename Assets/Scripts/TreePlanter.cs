@@ -56,7 +56,7 @@ public class TreePlanter : MonoBehaviour {
             position = getTreePosition();
             ShroomTree model = treePrefabs[Random.Range(0, treePrefabs.Length)];
             Quaternion randomRotation = Random.rotation;
-            listOfTrees.Add(Instantiate<ShroomTree>(model, position, Quaternion.Euler(0,0,Random.Range(0,360f))));
+            listOfTrees.Add(Instantiate<ShroomTree>(model, position, Quaternion.Euler(0,Random.Range(0,360f),0)));
             planted++;
         }
 

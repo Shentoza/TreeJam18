@@ -11,7 +11,7 @@ public class Infection : MonoBehaviour {
 	[SerializeField]
 	float maxRadius;
 
-	float time;
+	float time = 0;
 
 
 	// Use this for initialization
@@ -19,32 +19,36 @@ public class Infection : MonoBehaviour {
 		collider = GetComponent<SphereCollider>();
 		collider.radius = 0;
 		time = 0;
-		EventManager.OnSecondPassed += spread;
 	}
-
-	void Destroy()
-	{
-		EventManager.OnSecondPassed -= spread;
-	}
+		
 	
 	// Update is called once per frame
 	void Update () {
-		
+		time += Time.deltaTime;
+		if (time > 1) {
+			spread();
+			time = 0;
+		}
 	}
 
 	void spread(){
-		++time;
 		//collider.radius = Mathf.Log(1 + time);
-		collider.radius += 1f;
+		collider.radius += 2f;
 	}
 
 	void OnTriggerEnter(Collider c)
 	{
-		if (!(c.gameObject.layer == LayerMask.NameToLayer ("Floor"))) {			
+		if (c.gameObject.layer != LayerMask.NameToLayer ("Floor")) {			
 			ShroomTree tree = c.gameObject.GetComponent<ShroomTree> ();
 		
 			Debug.Log (c.gameObject.name);
 			if (tree != null) {
+
+				if (tree.gameObject == this.gameObject) {
+					Debug.Log ("hit myself!");
+					return;
+				}
+
 				Debug.Log ("1");
 				if (tree.isInfected ())
 					return;

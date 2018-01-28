@@ -172,6 +172,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1545116620433760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4078574951240564}
+  - component: {fileID: 135827516009062462}
+  m_Layer: 12
+  m_Name: BuildEnabler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1595863683365570
 GameObject:
   m_ObjectHideFlags: 1
@@ -184,6 +200,22 @@ GameObject:
   - component: {fileID: 23514132629184814}
   m_Layer: 10
   m_Name: blattwerk_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1658050043461448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4380531085666186}
+  - component: {fileID: 135172828187884888}
+  m_Layer: 11
+  m_Name: BuildBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,6 +289,19 @@ Transform:
   m_Father: {fileID: 4485215751885770}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4078574951240564
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1545116620433760}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4607000432410786}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4145664571327328
 Transform:
   m_ObjectHideFlags: 1
@@ -324,6 +369,19 @@ Transform:
   m_Father: {fileID: 4485215751885770}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4380531085666186
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658050043461448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4607000432410786}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4404475629843500
 Transform:
   m_ObjectHideFlags: 1
@@ -389,12 +447,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1869430364770662}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.61134094, y: -0.00008273123, z: 3.3233578}
+  m_LocalPosition: {x: -54.701084, y: 5.0307944e-16, z: -22.656683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4518451870552038}
   - {fileID: 4485215751885770}
   - {fileID: 4410457317461608}
+  - {fileID: 4380531085666186}
+  - {fileID: 4078574951240564}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -791,8 +851,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e8c7e5ec3b1fe469bcb1313d4486fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sporesPerMin: 10
+  currentHP: 0
+  currentIntegrity: 0
   shroomsIntersected: []
+--- !u!135 &135172828187884888
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658050043461448}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.83
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135509531516202270
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -805,6 +878,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 8
   m_Center: {x: -0.000039458275, y: 0, z: -0.00022572279}
+--- !u!135 &135827516009062462
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1545116620433760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7.78
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135857566570516560
 SphereCollider:
   m_ObjectHideFlags: 1

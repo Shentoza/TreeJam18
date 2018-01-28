@@ -41,7 +41,6 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
     public void addDyingTree(ShroomTree tree)
     {
         dyingTrees.Add(tree);
-		tree.setSporesPerMin (0.0f);
         EventManager.Instance.SendTreeInfectionComplete(tree);
     }
 

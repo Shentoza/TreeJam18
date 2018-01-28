@@ -7,13 +7,14 @@ public class ResourceManager : Singleton<ResourceManager> {
 
     //amount of spore the player has
     [SerializeField]
-	private float spore = 20.0f;
+	private float spore = 50.0f;
 	// the amount of spores which a generated per second
 	private float spores_per_Second = 0;
 	// the full amount of spores the player recieves in a minute
 	private float spore_per_minute = 0;
-	// amount of spore one tree produces
-	private float spore_per_tree = 30.0f;
+    // amount of spore one tree produces
+    private float spore_per_tree = 30.0f,
+        spore_gain_default = 50.0f;
 
 
 	//array of trees, which are connected to the main Tree
@@ -24,6 +25,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 	// Use this for initialization
 	void Start () {
         EventManager.OnSecondPassed += increase_Spore;
+        EventManager.OnTreeInfectionComplete += delete_Tree;
 		connected_Trees = new List<ShroomTree> ();
 	}
 	
@@ -39,9 +41,9 @@ public class ResourceManager : Singleton<ResourceManager> {
 		if (!connected_Trees.Contains (tree)) 
 		{
 			connected_Trees.Add (tree);
+            tree.transform.GetChild(0).gameObject.SetActive(true);
             EventManager.Instance.SendTreeCountChange(tree_Amount, ++tree_Amount);
-            spore_per_minute = tree_Amount * spore_per_tree;
-			spores_per_Second = spore_per_minute / 60.0f;
+            calculateSporeGain();
 			NodeManager.Instance.add_Nodes (tree);
 		}
 		
@@ -61,8 +63,10 @@ public class ResourceManager : Singleton<ResourceManager> {
 		if (connected_Trees.Contains (tree)) 
 		{
 			connected_Trees.Remove (tree);
-            EventManager.Instance.SendTreeCountChange(tree_Amount--, tree_Amount);
-			spores_per_Second = spore_per_minute / 60.0f;
+            tree.transform.GetChild(0).gameObject.SetActive(false);
+            EventManager.Instance.SendTreeCountChange(tree_Amount, --tree_Amount);
+            calculateSporeGain();
+            NodeManager.Instance.remove_Node(tree);
 		}
 	}
 
@@ -84,5 +88,11 @@ public class ResourceManager : Singleton<ResourceManager> {
     public bool hasTree(ShroomTree tree)
     {
         return connected_Trees.Contains(tree);
+    }
+
+    private void calculateSporeGain()
+    {
+        spore_per_minute = tree_Amount * spore_per_tree + spore_gain_default;
+        spores_per_Second = spore_per_minute / 60.0f;
     }
 }

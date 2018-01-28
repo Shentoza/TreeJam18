@@ -5,9 +5,6 @@ using UnityEngine;
 public class ShroomTree : Node {
 
     [SerializeField]
-    private float sporesPerMin;
-
-    [SerializeField]
     private float currentHP;
 
     private static float maxHP = 100.0f;
@@ -104,16 +101,6 @@ public class ShroomTree : Node {
 	{
 		shroomsIntersected.Remove (m);
 	}
-
-    public float getSporesPerMin()
-    {
-        return sporesPerMin;
-    }
-
-    public void setSporesPerMin(float value)
-    {
-        sporesPerMin = value;
-    }
 
     public void dealDamage(float dmg)
     {

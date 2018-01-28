@@ -9,15 +9,9 @@ public class BuildManager : Singleton<BuildManager>
     [SerializeField]
     GameObject[] mushroomPrefabs;
 
-    private SphereCollider previewCollider;
-
-    private int layer_mask, blocked_mask;
+    private int layer_mask, blocked_mask, buildable_mask;
 
     private bool inBuildMode = true;
-
-    private bool canBuildHere;
-
-    private int colliderNum;
 
     private int selectedShroom = 0;
 
@@ -26,40 +20,23 @@ public class BuildManager : Singleton<BuildManager>
     {
         layer_mask = LayerMask.GetMask("Floor");
         blocked_mask = LayerMask.GetMask("Blocked");
-        previewCollider = GetComponent<SphereCollider>();
+        buildable_mask = LayerMask.GetMask("Buildable");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inBuildMode)
+        if (inBuildMode && Input.GetMouseButtonDown(0))
         {
             Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);      // von wo der Raycast starten soll
             RaycastHit hit;
-            if (Physics.Raycast(myRay, out hit, Mathf.Infinity, layer_mask))                            // wenn der ray was trifft werden die infos des treffers in hit gespeichert
+            if (Physics.Raycast(myRay, out hit, Mathf.Infinity, layer_mask) &&
+                !Physics.Raycast(myRay, Mathf.Infinity, blocked_mask) &&
+                Physics.Raycast(myRay, Mathf.Infinity, buildable_mask))                            // wenn der ray was trifft werden die infos des treffers in hit gespeichert
             {
-                previewCollider.transform.position = hit.point;
-                //Debug.Log(hit.point);
-
-                if (colliderNum > 0 && Input.GetMouseButtonDown(0))                            // what to do if i press the left mouse button
-                {
-                    if (!Physics.Raycast(myRay, Mathf.Infinity, blocked_mask))
-                        Build(selectedShroom, hit.point);
-                    //always spawn on height of the floor + half height of the object
-                    //Debug.Log(hit.point);                                   // debugs the vector3 of the position where I clicked
-                }
+                Build(selectedShroom, hit.point);
             }
         }
-    }
-
-    void OnTriggerEnter(Collider c)
-    {
-        ++colliderNum;
-    }
-
-    void OnTriggerExit(Collider c)
-    {
-        --colliderNum;
     }
 
     void Build(int index, Vector3 pos)

@@ -17,7 +17,7 @@ public class Infection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		collider = GetComponent<SphereCollider>();
-		collider.radius = 0;
+		collider.radius = 8;
 		time = 0;
 		EventManager.OnSecondPassed += spread;
 	}
@@ -34,7 +34,8 @@ public class Infection : MonoBehaviour {
 
 	void spread(){
 		++time;
-		collider.radius = Mathf.Log(1 + time);
+		//collider.radius = Mathf.Log(1 + time);
+		collider.radius += 1f;
 	}
 
 	void OnTriggerEnter(Collider c)

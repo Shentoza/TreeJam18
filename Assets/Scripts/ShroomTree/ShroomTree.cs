@@ -51,7 +51,6 @@ public class ShroomTree : Node {
     public void killTree()
     {
         alive = false;
-        setSporesPerMin(0);
         foreach (Mushroom shroom in shroomsIntersected)
         {
             shroom.deleteTree(this);
@@ -67,13 +66,14 @@ public class ShroomTree : Node {
     //Trigger for adding shrooms connected to this tree
 	 void OnTriggerEnter(Collider c)
     {
-        if (c.gameObject.GetComponent<Mushroom>())
-        {
-			if (!c.isTrigger) {
-				shroomsIntersected.Add (c.gameObject.GetComponent<Mushroom> ());
-				add_Node (c.gameObject.GetComponent<Mushroom> ());
+		if (!this.isInfected ()) {
+			if (c.gameObject.GetComponent<Mushroom> ()) {
+				if (!c.isTrigger) {
+					shroomsIntersected.Add (c.gameObject.GetComponent<Mushroom> ());
+					add_Node (c.gameObject.GetComponent<Mushroom> ());
+				}
 			}
-        }
+		}
     }
 
     public bool hasShroom(Mushroom shroom)

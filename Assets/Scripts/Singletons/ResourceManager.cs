@@ -5,14 +5,15 @@ using UnityEngine;
 [Prefab("Prefabs/Singletons/Manager", true)]
 public class ResourceManager : Singleton<ResourceManager> {
 
-	//amount of spore the player has
+    //amount of spore the player has
+    [SerializeField]
 	private float spore = 20.0f;
 	// the amount of spores which a generated per second
 	private float spores_per_Second = 0;
 	// the full amount of spores the player recieves in a minute
-	private float full_spore_amount = 0;
+	private float spore_per_minute = 0;
 	// amount of spore one tree produces
-	private float spore_per_tree = 0;
+	private float spore_per_tree = 30.0f;
 
 
 	//array of trees, which are connected to the main Tree
@@ -22,7 +23,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 
 	// Use this for initialization
 	void Start () {
-
+        EventManager.OnSecondPassed += increase_Spore;
 		connected_Trees = new List<ShroomTree> ();
 	}
 	
@@ -39,8 +40,8 @@ public class ResourceManager : Singleton<ResourceManager> {
 		{
 			connected_Trees.Add (tree);
             EventManager.Instance.SendTreeCountChange(tree_Amount, ++tree_Amount);
-			full_spore_amount += tree.getSporesPerMin ();
-			spores_per_Second = full_spore_amount / 60.0f;
+            spore_per_minute = tree_Amount * spore_per_tree;
+			spores_per_Second = spore_per_minute / 60.0f;
 			NodeManager.Instance.add_Nodes (tree);
 		}
 		
@@ -51,6 +52,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 	{
 		float new_spore = spore + spores_per_Second;
 		EventManager.Instance.SendSporeChange (spore, new_spore);
+        spore = new_spore;
 	}
 
 	//deletes the given tree if its connected to the network
@@ -60,7 +62,7 @@ public class ResourceManager : Singleton<ResourceManager> {
 		{
 			connected_Trees.Remove (tree);
             EventManager.Instance.SendTreeCountChange(tree_Amount--, tree_Amount);
-			spores_per_Second = full_spore_amount / 60.0f;
+			spores_per_Second = spore_per_minute / 60.0f;
 		}
 	}
 

@@ -1,76 +1,80 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Prefab("Prefabs/Singletons/Manager", true)]
-public class BuildManager : Singleton<BuildManager> {
+public class BuildManager : Singleton<BuildManager>
+{
 
-	[SerializeField]
-	GameObject[] mushroomPrefabs;
+    [SerializeField]
+    GameObject[] mushroomPrefabs;
 
-	private SphereCollider previewCollider;
+    private SphereCollider previewCollider;
 
     private int layer_mask, blocked_mask;
 
-	private bool inBuildMode = true;
+    private bool inBuildMode = true;
 
-	private bool canBuildHere;
+    private bool canBuildHere;
 
-	private int colliderNum;
+    private int colliderNum;
 
-	private int selectedShroom = 0;
+    private int selectedShroom = 0;
 
-	// Use this for initialization
-	void Start () {
-		layer_mask = LayerMask.GetMask("Floor");
+    // Use this for initialization
+    void Start()
+    {
+        layer_mask = LayerMask.GetMask("Floor");
         blocked_mask = LayerMask.GetMask("Blocked");
-		previewCollider = GetComponent<SphereCollider>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(inBuildMode)
-		{
-			Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);      // von wo der Raycast starten soll
-			RaycastHit hit;
-			if (Physics.Raycast(myRay, out hit, Mathf.Infinity, layer_mask))                            // wenn der ray was trifft werden die infos des treffers in hit gespeichert
-			{
-				previewCollider.transform.position = hit.point;
-				//Debug.Log(hit.point);
+        previewCollider = GetComponent<SphereCollider>();
+    }
 
-				if (colliderNum > 0 && Input.GetMouseButtonDown(0))                            // what to do if i press the left mouse button
-				{
+    // Update is called once per frame
+    void Update()
+    {
+        if (inBuildMode)
+        {
+            Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);      // von wo der Raycast starten soll
+            RaycastHit hit;
+            if (Physics.Raycast(myRay, out hit, Mathf.Infinity, layer_mask))                            // wenn der ray was trifft werden die infos des treffers in hit gespeichert
+            {
+                previewCollider.transform.position = hit.point;
+                //Debug.Log(hit.point);
+
+                if (colliderNum > 0 && Input.GetMouseButtonDown(0))                            // what to do if i press the left mouse button
+                {
                     if (!Physics.Raycast(myRay, Mathf.Infinity, blocked_mask))
-					    Build(selectedShroom ,hit.point);
-						//always spawn on height of the floor + half height of the object
-					//Debug.Log(hit.point);                                   // debugs the vector3 of the position where I clicked
-				}
-			}
-		}
-	}
+                        Build(selectedShroom, hit.point);
+                    //always spawn on height of the floor + half height of the object
+                    //Debug.Log(hit.point);                                   // debugs the vector3 of the position where I clicked
+                }
+            }
+        }
+    }
 
-	void OnTriggerEnter(Collider c)
-	{
-		++colliderNum;
-	}
+    void OnTriggerEnter(Collider c)
+    {
+        ++colliderNum;
+    }
 
-	void OnTriggerExit(Collider c)
-	{
-		--colliderNum;
-	}
+    void OnTriggerExit(Collider c)
+    {
+        --colliderNum;
+    }
 
-	void Build (int index, Vector3 pos)
+    void Build(int index, Vector3 pos)
     {
         GameObject m = mushroomPrefabs[index];
-		int cost = m.GetComponent<Mushroom>().Cost;
-        if (ResourceManager.Instance.reduce_spore(cost)){
-			Instantiate(m, pos, Quaternion.identity);		//besser hier glaube ich
-			//MushroomManager.addMushroom(pos);
-			return;
-		}
-		else{
-			//Fehlersound
-		}
-		
+        int cost = m.GetComponent<Mushroom>().Cost;
+        if (ResourceManager.Instance.reduce_spore(cost))
+        {
+            Instantiate(m, pos, Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0));        //besser hier glaube ich
+            return;
+        }
+        else
+        {
+            //Fehlersound
+        }
+
     }
 }

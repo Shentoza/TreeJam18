@@ -110,5 +110,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numOfTrees: 300
-  tree1: {fileID: 114278500112093776, guid: 19682540d8a014522a319b1cf788aee2, type: 2}
-  tree2: {fileID: 114652296782671978, guid: 3c886813b08a52a43af303a61bdb7518, type: 2}
+  treePrefabs:
+  - {fileID: 114011532480730484, guid: eddfacc86e3fccd489e41f32803dd5a0, type: 2}
+  - {fileID: 114011532480730484, guid: 608138930e3422f42bffea6cb139259f, type: 2}
+  - {fileID: 114895530983829878, guid: 47b552e970eb2994aa3af384ac15fe4a, type: 2}
+  - {fileID: 114895530983829878, guid: a46dbad96db3d7d4bbe93c7e27ff10ca, type: 2}
+  - {fileID: 114571292936631446, guid: d589e094c355d1d48b7948dd4364f2cf, type: 2}
+  - {fileID: 114571292936631446, guid: 87c5afbc791c76845beb57cab4852d53, type: 2}

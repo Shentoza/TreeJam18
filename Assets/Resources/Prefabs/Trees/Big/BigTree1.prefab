@@ -479,6 +479,7 @@ MonoBehaviour:
   currentHP: 0
   currentIntegrity: 0
   shroomsIntersected: []
+  Blattwerk: {fileID: 1279526992604840}
 --- !u!135 &135283397086756930
 SphereCollider:
   m_ObjectHideFlags: 1

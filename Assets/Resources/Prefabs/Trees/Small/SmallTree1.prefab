@@ -168,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1691549151997704}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.65425, y: 5.242442, z: 11.019453}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4513847392643236}
@@ -479,6 +479,7 @@ MonoBehaviour:
   currentHP: 0
   currentIntegrity: 0
   shroomsIntersected: []
+  Blattwerk: {fileID: 1279526992604840}
 --- !u!135 &135283397086756930
 SphereCollider:
   m_ObjectHideFlags: 1

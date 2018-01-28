@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9568628, g: 0.89019614, b: 0.73333335, a: 1}
+  m_Color: {r: 0.9568628, g: 0.89019614, b: 0.73333335, a: 0.447}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -541,7 +541,8 @@ MonoBehaviour:
   treeScore: {fileID: 0}
   tooltipPanel: {fileID: 1359286255571866}
   treeHealthbar: {fileID: 224691877704164794}
-  offsetOutTheWindow: 94
+  deathPosition: {x: 0, y: -82, z: 0}
+  healthyPosition: {x: 0, y: 0, z: 0}
   healthyLeaf: {fileID: 2800000, guid: f608fb7d2c34eea4290debbe6e0702ea, type: 3}
   sickLeaf: {fileID: 2800000, guid: a180c565a0b758c4f9724065adb19fb7, type: 3}
   leafes:
@@ -549,7 +550,9 @@ MonoBehaviour:
   - {fileID: 114286879131514706}
   - {fileID: 114031210605367716}
   - {fileID: 114144306149954170}
+  - {fileID: 114584892835838100}
   - {fileID: 114596247699830826}
+  tester: 0
 --- !u!114 &114836161058377140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -844,7 +847,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -82}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224732396076527044

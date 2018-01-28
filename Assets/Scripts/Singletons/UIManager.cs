@@ -24,7 +24,9 @@ public class UIManager : Singleton<UIManager> {
     RectTransform treeHealthbar;
     float oldHealthValue, newHealthValue;
     [SerializeField]
-    float offsetOutTheWindow = 94;
+    Vector3 deathPosition;
+    [SerializeField]
+    Vector3 healthyPosition;
 
 
     float oldInfestation, newInfestation;
@@ -41,8 +43,8 @@ public class UIManager : Singleton<UIManager> {
         EventManager.OnSporeChange += sporeValueChanged;
         EventManager.OnTreeCountChange += treeValueChanged;
         currentSporeValue = newSporeValue = 0;
-        tooltipPanel.SetActive(true);
-        tooltipShowing = true;
+        tooltipPanel.SetActive(false);
+        tooltipShowing = false;
     }
 
     void Update()
@@ -79,18 +81,24 @@ public class UIManager : Singleton<UIManager> {
             mousePosLocked.y = Mathf.Clamp(Camera.main.pixelHeight - (mousePosLocked.y + halfBounds.y), halfBounds.y, Camera.main.pixelHeight- halfBounds.y);
             Vector3 mouse = new Vector3(mousePosLocked.x, mousePosLocked.y, 0);
             tooltipPanel.transform.position = mouse;
-            newInfestation = currentTree.getIntegrity() * leafes.Count;
-            if ((int)oldInfestation != (int)newInfestation)
-                paintLeaves();
-            oldInfestation = newInfestation;
 
-            newHealthValue = currentTree.getHP();
-            /*
-            if(newHealthValue != oldHealthValue)
+            if (currentTree)
             {
+                newHealthValue = currentTree.getHP() / 100.0f;
+                if(newHealthValue != oldHealthValue)
+                {
+                    StopCoroutine("lerpHealthbar");
+                    StartCoroutine(lerpHealthbar(oldHealthValue, newHealthValue, 1.0f));
+                    oldHealthValue = newHealthValue;
+                }
+
+                newInfestation = currentTree.getIntegrity() * leafes.Count;
+                if ((int)oldInfestation != (int)newInfestation)
+                    paintLeaves();
+                oldInfestation = newInfestation;
 
             }
-            */
+            
         }
     }
 
@@ -123,11 +131,17 @@ public class UIManager : Singleton<UIManager> {
             leafes[i].texture = (int)newInfestation <= i ? healthyLeaf : sickLeaf;
         }
     }
-    /*
-    IEnumerator lerpHealthbar(float from, float to, float timeNeeded)
-    {
 
+    IEnumerator lerpHealthbar(float oldProgress, float progress, float timeNeeded)
+    {
+        float alpha = 0f;
+        while(alpha < 1.0f)
+        {
+            float currentProgress = Mathf.Lerp(oldProgress, progress, alpha);
+            treeHealthbar.localPosition = Vector3.Lerp(deathPosition, healthyPosition, Mathf.SmoothStep(oldProgress, progress, alpha));
+            alpha += Time.deltaTime / timeNeeded;
+            yield return null;
+        }
         yield break;
     }
-    */
 }

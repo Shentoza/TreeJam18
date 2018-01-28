@@ -24,6 +24,9 @@ public class ShroomTree : Node {
 	[SerializeField]
     private List<Mushroom> shroomsIntersected;
 
+    [SerializeField]
+    GameObject Blattwerk;
+
     public bool IsAlive
     {
         get
@@ -135,6 +138,13 @@ public class ShroomTree : Node {
     public void incrIntegrity()
     {
         currentIntegrity++;
+        if(currentIntegrity == maxIntegrity)
+        {
+            if(Blattwerk != null)
+            {
+                Destroy(Blattwerk);
+            }
+        }
     }
 
 

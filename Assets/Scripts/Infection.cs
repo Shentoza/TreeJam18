@@ -17,7 +17,7 @@ public class Infection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		collider = GetComponent<SphereCollider>();
-		collider.radius = 8;
+		collider.radius = 0;
 		time = 0;
 		EventManager.OnSecondPassed += spread;
 	}
@@ -40,29 +40,30 @@ public class Infection : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c)
 	{
-		ShroomTree tree = c.gameObject.GetComponent<ShroomTree>();
+		if (!(c.gameObject.layer == LayerMask.NameToLayer ("Floor"))) {			
+			ShroomTree tree = c.gameObject.GetComponent<ShroomTree> ();
 		
-		Debug.Log(c.gameObject.name);
-		if (tree != null)
-		{
-			Debug.Log("1");
-			if (tree.isInfected())
-				return;
-			Debug.Log("2");
-			Ray ray = new Ray(transform.position, tree.transform.position - transform.position);
-			RaycastHit hit;
-			Physics.Raycast(ray, out hit);
-			Debug.DrawLine(ray.origin, hit.point);
+			Debug.Log (c.gameObject.name);
+			if (tree != null) {
+				Debug.Log ("1");
+				if (tree.isInfected ())
+					return;
+				Debug.Log ("2");
+				Ray ray = new Ray (transform.position, tree.transform.position - transform.position);
+				RaycastHit hit;
+				Physics.Raycast (ray, out hit);
+				Debug.DrawLine (ray.origin, hit.point);
 
-			GameObject other = hit.collider.gameObject;
+				GameObject other = hit.collider.gameObject;
 
-			Debug.Log(other.name);
+				Debug.Log (other.name);
 	
-			if (other.GetComponent<ShroomTree>() != null)
-			{
-				Debug.Log("SPREADING");
-				OpalmaCareSystem.Instance.addInfectedTree(tree);
-				tree.gameObject.AddComponent<Infection>();
+				if (other.GetComponent<ShroomTree> () != null) {
+					Debug.Log ("SPREADING");
+					OpalmaCareSystem.Instance.addInfectedTree (tree);
+					//NEIN NEIN nicht mehr hier! das ist zu schnell!
+					//tree.gameObject.AddComponent<Infection> ();
+				}
 			}
 		}
 	}

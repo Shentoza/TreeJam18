@@ -7,19 +7,19 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
 
 
     //List with all infected trees
-    List<ShroomTree> infectedTrees;
+	List<ShroomTree> infectedTrees = new List<ShroomTree>();
 
     //List with all infected trees which get dmg over time
-    List<ShroomTree> dyingTrees;
+	List<ShroomTree> dyingTrees= new List<ShroomTree>();
 
     //Pick value
     [SerializeField]
     private float dmg;
 
 	// Use this for initialization
+
+
 	void Start () {
-        infectedTrees = new List<ShroomTree>();
-        dyingTrees = new List<ShroomTree>();
         EventManager.OnSecondPassed += handleDmg;
         EventManager.OnSecondPassed += checkInfections;
 	}
@@ -34,6 +34,7 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
     public void addInfectedTree(ShroomTree tree)
     {
         tree.setInfection(true);
+
         infectedTrees.Add(tree);
     }
 
@@ -65,7 +66,9 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
             tree.incrIntegrity();
             if(tree.getIntegrity() >= tree.getMaxIntegrity())
             {
-                addDyingTree(tree);
+				infectedTrees.Remove (tree);
+				addDyingTree(tree);
+				tree.gameObject.AddComponent<Infection> ();
             }
         }
     }

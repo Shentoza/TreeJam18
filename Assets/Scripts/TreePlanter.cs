@@ -13,7 +13,7 @@ public class TreePlanter : MonoBehaviour {
     ShroomTree tree2;
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
         plantTrees();
     }
 
@@ -58,6 +58,21 @@ public class TreePlanter : MonoBehaviour {
             listOfTrees.Add(Instantiate<ShroomTree>((treeModel <= 50.0f) ? tree1 : tree2, position, tree1.transform.rotation));
             planted++;
         }
+
+		ShroomTree IT1 = GameObject.Find("InfectedTree1").GetComponent<ShroomTree>();
+		ShroomTree IT2 = GameObject.Find("InfectedTree2").GetComponent<ShroomTree>();
+		ShroomTree IT3 = GameObject.Find("InfectedTree3").GetComponent<ShroomTree>();
+		ShroomTree IT4 = GameObject.Find("InfectedTree4").GetComponent<ShroomTree>();
+
+		OpalmaCareSystem.Instance.addInfectedTree (IT1);
+		OpalmaCareSystem.Instance.addInfectedTree (IT2);
+		OpalmaCareSystem.Instance.addInfectedTree (IT3);
+		OpalmaCareSystem.Instance.addInfectedTree (IT4);
+
+		listOfTrees.Add(IT1);
+		listOfTrees.Add(IT2);
+		listOfTrees.Add(IT3);
+		listOfTrees.Add(IT4);
 
         foreach(ShroomTree tree in listOfTrees)
         {

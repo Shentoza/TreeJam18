@@ -5,6 +5,8 @@ using UnityEngine;
 [Prefab("Prefabs/Singletons/OpalmaCareSystem", true)]
 public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
 
+    [SerializeField]
+    GameObject InfectionMarkerPrefab;
 
     //List with all infected trees
 	[SerializeField]
@@ -37,6 +39,7 @@ public class OpalmaCareSystem : Singleton<OpalmaCareSystem> {
     {
         tree.setInfection(true);
         infectedTrees.Add(tree);
+        Instantiate(InfectionMarkerPrefab, tree.transform.position + new Vector3(0,15,0), Quaternion.identity);
     }
 
     //Fires "tree is dying" event

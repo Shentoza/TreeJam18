@@ -110,9 +110,9 @@ public class UIManager : Singleton<UIManager> {
         this.newSporeValue = newValue;
     }
 
-    void treeValueChanged(int oldValue, int newValue)
+    void treeValueChanged(int change)
     {
-        currentInfectedTrees = newValue;
+        currentInfectedTrees += change;
         UpdateInfectionUI();
     }
 

@@ -20,6 +20,9 @@ public class BuildManager : Singleton<BuildManager> {
 
 	private int selectedShroom = 0;
 
+
+   
+
 	// Use this for initialization
 	void Start () {
 		layer_mask = LayerMask.GetMask("Floor");

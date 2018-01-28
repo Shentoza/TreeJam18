@@ -106,7 +106,6 @@ GameObject:
   - component: {fileID: 114011532480730484}
   - component: {fileID: 135303541687431188}
   - component: {fileID: 54851678408160132}
-  - component: {fileID: 114846113106533644}
   m_Layer: 10
   m_Name: SmallTree1
   m_TagString: Untagged
@@ -169,11 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1691549151997704}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-<<<<<<< HEAD
   m_LocalPosition: {x: -26.047438, y: 0.57955074, z: -19.66888}
-=======
-  m_LocalPosition: {x: -30.745447, y: 0.2, z: -27.572996}
->>>>>>> a98725fb7999f07ccfc26c972b527a8d9f8c3764
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4513847392643236}
@@ -373,7 +368,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: -1623740376, guid: 08d2a850ab0d2a349957cd76fcdb778d, type: 3}
+  - {fileID: 2100000, guid: 7621c409c75092a4982181f515864ba8, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -485,17 +480,6 @@ MonoBehaviour:
   currentIntegrity: 0
   shroomsIntersected: []
   Blattwerk: {fileID: 1279526992604840}
---- !u!114 &114846113106533644
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1691549151997704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bf4372b1f600b942a6ae3aa384b1ff7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &135283397086756930
 SphereCollider:
   m_ObjectHideFlags: 1

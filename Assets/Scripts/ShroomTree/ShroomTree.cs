@@ -140,7 +140,6 @@ public class ShroomTree : Node {
 
     public void incrIntegrity()
     {
-
         currentIntegrity++;
         if(currentIntegrity == maxIntegrity)
         {

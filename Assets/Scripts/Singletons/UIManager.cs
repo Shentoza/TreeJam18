@@ -125,7 +125,8 @@ public class UIManager : Singleton<UIManager> {
 
     void UpdateInfectionUI()
     {
-        treeRatio = (float)currentInfectedTrees / (float)maxTrees;
+        if(maxTrees != 0.0)
+            treeRatio = (float)currentInfectedTrees / (float)maxTrees;
 
         infectionRatioRect.localScale = new Vector3(treeRatio, infectionRatioRect.localScale.y, infectionRatioRect.localScale.z);
     }

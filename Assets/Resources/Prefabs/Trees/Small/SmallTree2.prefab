@@ -76,7 +76,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1723933098557930
 GameObject:
@@ -478,6 +478,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHP: 0
   currentIntegrity: 0
+  alive: 0
+  infected: 0
+  dies: 0
   shroomsIntersected: []
   Blattwerk: {fileID: 1723933098557930}
 --- !u!135 &135029401447697914

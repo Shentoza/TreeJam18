@@ -77,7 +77,7 @@ public class TreePlanter : MonoBehaviour {
 
         foreach(ShroomTree tree in listOfTrees)
         {
-            Destroy(tree.transform.GetChild(2).gameObject);
+            Destroy(tree.transform.GetChild(3).gameObject);
         }
     }
    

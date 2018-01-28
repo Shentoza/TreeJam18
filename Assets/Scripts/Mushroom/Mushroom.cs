@@ -6,9 +6,14 @@ using UnityEngine;
 public class Mushroom : Node
 {
     public float range;
-    
+
     static int sporeCost = 5,
         blockedMask;
+
+    [SerializeField]
+    int upgradeLevel,
+        currentUpgradeTime = 0,
+        upgradeTime = 30;
 
     public int Cost
     {
@@ -31,9 +36,14 @@ public class Mushroom : Node
         mushroomNeighbors = new List<Mushroom>();
         initalizeNeighbour();
         NodeManager.Instance.add_Nodes(this);
-        EventManager.OnMinutePassed += spawnSmallMushroom;
+        EventManager.OnSecondPassed += upgradeTimer;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G)) //for debug
+            spawnSmallMushroom();
+    }
 
     public void deleteTree(ShroomTree s)
     {
@@ -53,32 +63,45 @@ public class Mushroom : Node
         Destroy(this.gameObject);
     }
 
+    void upgradeTimer()
+    {
+        if (++currentUpgradeTime == upgradeTime)
+        {
+            currentUpgradeTime = 0;
+            spawnSmallMushroom();
+        }
+    }
+
     public void spawnSmallMushroom()
     {
-        Vector3 randomPos;
-        GameObject newShroom;
-        bool placed = false;
-        int i = 0;
-        Ray ray;
-        while (!placed && i++ < 10)
+        if (upgradeLevel++ < 5)
         {
-            randomPos = transform.position + new Vector3(UnityEngine.Random.Range(-2.0f, 2.0f), 0.0f,
-                UnityEngine.Random.Range(-2.0f, 2.0f)); // This places in a rectangle around the shroom, shold be circle
-            ray = new Ray(randomPos + new Vector3(0f, 100f, 0f), Vector3.down);
-            if (!Physics.Raycast(ray, Mathf.Infinity, blockedMask))
+            Vector3 randomPos;
+            GameObject newShroom;
+            bool placed = false;
+            int i = 0;
+            Ray ray;
+            setRange(++range);
+            while (!placed && i++ < 10)
             {
-                if (UnityEngine.Random.value > 0.5f)
+                randomPos = transform.position + new Vector3(UnityEngine.Random.Range(-range + 1, range - 1),
+                    0.0f, UnityEngine.Random.Range(-range + 1, range - 1)); // This places in a rectangle around the shroom, shold be circle
+                ray = new Ray(randomPos + new Vector3(0f, 100f, 0f), Vector3.down);
+                if (!Physics.Raycast(ray, Mathf.Infinity, blockedMask))
                 {
-                    newShroom = Instantiate(smallMushrooms[0], transform);
-                }
-                else
-                {
-                    newShroom = Instantiate(smallMushrooms[1], transform);
-                }
+                    if (UnityEngine.Random.value > 0.5f)
+                    {
+                        newShroom = Instantiate(smallMushrooms[0], transform);
+                    }
+                    else
+                    {
+                        newShroom = Instantiate(smallMushrooms[1], transform);
+                    }
 
-                newShroom.transform.SetPositionAndRotation(randomPos,
-                    Quaternion.Euler(0, UnityEngine.Random.Range(0.0f, 360.0f), 0));
-                placed = true;
+                    newShroom.transform.SetPositionAndRotation(randomPos,
+                        Quaternion.Euler(0, UnityEngine.Random.Range(0.0f, 360.0f), 0));
+                    placed = true;
+                }
             }
         }
     }
@@ -102,4 +125,11 @@ public class Mushroom : Node
         }
     }
 
+    void setRange(float r)
+    {
+        range = r;
+        transform.GetChild(0).localScale = new Vector3(r, r, r);
+        transform.GetChild(1).localScale = new Vector3(r, r, r);
+        transform.GetChild(2).localScale = transform.GetChild(2).localScale + new Vector3(0.2f, 0.2f, 0.2f);
+    }
 }

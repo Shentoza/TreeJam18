@@ -73,4 +73,9 @@ public class NodeManager : Singleton<NodeManager>{
 	{
 		all_Nodes.Add (new_Node);
 	}
+
+    public void remove_Node(Node n)
+    {
+        all_Nodes.Remove(n);
+    }
 }
